@@ -1,3 +1,5 @@
+import { renderHamburgerMenu } from "./modules/gui.js";
+
 if (
 	window.location.pathname === "/" ||
 	window.location.pathname.includes("index.html")
@@ -18,17 +20,25 @@ if (
 	receiptSetup();
 }
 
-function pageSetup() {}
-
+function pageSetup() {
+  renderHamburgerMenu();
+}
 function foodtruckSetup() {
+  renderHamburgerMenu();
 	loadFoodtruckEventListeners();
 }
 
-async function menuSetup() {}
+async function menuSetup() {
+  renderHamburgerMenu();
+}
 
-function cartSetup() {}
+function cartSetup() {
+  renderHamburgerMenu();
+}
 
-function receiptSetup() {}
+function receiptSetup() {
+  renderHamburgerMenu();
+}
 
 // EVENT LISTENERS
 
