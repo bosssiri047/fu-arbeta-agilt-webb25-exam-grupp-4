@@ -5,7 +5,7 @@
     --mint-green: rgba(142, 216, 191, 1); /* Landing page background */
     --clay: rgba(96, 88, 88, 1); /* Menu background colour */
     --coal: rgba(53, 49, 49, 1); /* Button colour */
-    --snow: rgba(241, 240, 236, 0.24); /* Text colour */
+    --snow: rgba(244, 243, 241, 0.94); /* Text colour */
     --ash: rgba(238, 238, 238, 1); /* Min beställning background colour */
     --alert: rgba(235, 87, 87, 1); /* Cart alert */
 }
@@ -25,4 +25,124 @@ body {
 /* Utils */
 .d-none {
     display: none;
+}
+
+/* Hamburger Menu */
+.header {
+
+    .header__burger-label {
+        width: 1.5rem;
+        aspect-ratio: 1;
+        position: fixed;
+        bottom: 1rem;
+        right: 1rem;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        place-content: center;
+        z-index: 999;
+        cursor: pointer;
+        padding: 2.5rem;
+        background-color: var(--mint-green);
+        border-radius: 30%;
+    }
+
+    .header__burger-label > .header__burger-btn,
+    .header__burger-label > .header__burger-btn::before, 
+    .header__burger-label > .header__burger-btn::after { 
+        width: 4rem;
+        height: 0.5rem;
+        position: absolute;
+        background-color: var(--snow);
+        border-radius: 1rem;
+        box-shadow: 0 5px 2px rgba(0, 0, 0, 0.3);
+    }
+    .header__burger-label > .header__burger-btn::before {
+        content: '';
+        top: 1rem;
+    }
+    .header__burger-label > .header__burger-btn::after {
+        content: '';
+        top: -1rem;
+    }
+
+    .header__burger {
+        display: none;
+    }
+
+    .header__burger:checked ~ .header__burger-label > .header__burger-btn, .header__burger:checked ~ .header__burger-label > .header__burger-btn::before, .header__burger:checked ~ .header__burger-label > .header__burger-btn::after {
+        box-shadow: none;
+        width: 4rem;
+        height: 0.35rem;
+    }
+        
+    .header__burger:checked ~ .header__burger-label > .header__burger-btn {
+        transform: rotate(45deg);
+        box-shadow: 0 5px 2px rgba(0, 0, 0, 0.4);
+    }
+    
+    .header__burger:checked ~ .header__burger-label > .header__burger-btn::before {
+        transform: rotate(0deg);
+        top: 0;
+    }
+
+    .header__burger:checked ~ .header__burger-label > .header__burger-btn::after {
+        transform: rotate(90deg);
+        top: 0;
+        box-shadow: 5px 0px 2px rgba(0, 0, 0, 0.4);
+    }
+
+    .header__burger:checked ~ .nav-bar {
+        display: flex;
+        transform: translateX(0);
+            
+        .nav-bar__list {
+            .nav-bar__item {
+                transform: translateX(0);
+                opacity: 1;
+                }
+        }
+    }
+
+    .nav-bar {
+        position: fixed;
+        right: 0;
+        z-index: 10;
+        width: 100%;
+        height: 100vh;
+        background: var(--coal);
+        transform: translateX(100%);
+        padding: 0;
+        margin: 0;
+        gap: 3rem;
+            
+        .nav-bar__list {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            padding: 0;
+            margin: 0;
+            gap: 2rem;
+            justify-content: space-evenly;
+            align-items: flex-start;
+            padding-left: 2rem;
+
+            .nav-bar__item {
+                border-bottom: 1px solid var(--mint-green);
+                display: flex;
+                transform: translateX(2rem);
+                opacity: 0;
+                transition: all .5s ease;
+                margin: 0;
+
+                .nav-bar__link {
+                    width: 100%;
+                    padding: 0.25rem;
+                    color: var(--snow);
+                    text-decoration: none;
+                    font-size: 3rem;
+                }
+            }
+         }
+    }
 }
