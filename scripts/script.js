@@ -1,4 +1,7 @@
-import { renderHamburgerMenu } from "./modules/gui.js";
+import { fetchProducts } from "./modules/api.js";
+import { renderHamburgerMenu, renderProducts } from "./modules/gui.js";
+import { addToCart } from "./modules/localeStroage.js";
+import { getElementAll } from "./utils/domutils.js";
 
 if (
 	window.location.pathname === "/" ||
@@ -25,11 +28,21 @@ function pageSetup() {
 }
 function foodtruckSetup() {
   renderHamburgerMenu();
-	loadFoodtruckEventListeners();
+  loadFoodtruckEventListeners();
 }
 
 async function menuSetup() {
   renderHamburgerMenu();
+  const products = await fetchProducts();
+  console.log(products);
+  renderProducts(products);
+
+  const menuRef = getElementAll('.menu__list-item');
+  console.log(menuRef);
+
+  for (let list of menuRef) {
+	list.addEventListener('click', (event) => {addToCart(list.id)});
+  }
 }
 
 function cartSetup() {

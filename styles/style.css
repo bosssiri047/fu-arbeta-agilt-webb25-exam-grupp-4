@@ -264,3 +264,35 @@ a {
 		}
 	}
 }
+
+/* MENU */
+.menu-wrapper {
+    margin: 0 1rem;
+    background-color: var(--coal);
+    height: 725px;
+    overflow: auto;
+
+    .menu__title {
+        padding: 1rem 2rem;
+        background-color: var(--clay);
+    }
+
+    .menu__list {
+        height: auto;
+        padding: 0 1rem;
+        list-style: none;
+        
+        .menu__list-item {
+            margin-top: 1rem;
+            margin-bottom: 3rem;
+            border-bottom: 1px solid var(--clay);
+            
+            .menu__card {
+                .menu__card-info-group {
+                    display: flex;
+                    justify-content: space-between;
+                }
+            }
+        }
+    }
+}

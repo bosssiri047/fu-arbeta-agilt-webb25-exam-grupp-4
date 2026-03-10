@@ -2,6 +2,10 @@ export function getElement(selector) {
     return document.querySelector(selector);
 }
 
+export function getElementAll(selector) {
+    return document.querySelectorAll(selector);
+}
+
 export function createElement(tagName) {
     return document.createElement(tagName);
 }
