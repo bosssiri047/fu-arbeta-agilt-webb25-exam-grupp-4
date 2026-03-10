@@ -1,5 +1,7 @@
 // CART
 
+import { fetchProducts } from "./api.js";
+
 //Add a single item to cart by id
 export function addToCart(productId) {
 	let cart = getCart();
@@ -88,4 +90,13 @@ function findItem(cart, productId) {
 function saveCart(cart) {
 	console.log("Cart saved and pushed to local storage");
 	localStorage.setItem("cartList", JSON.stringify(cart));
+}
+
+// ORDER HISTORY
+
+export async function addOrderToHistory(cart) {
+	const products = await fetchProducts();
+
+	for (let item of cart) {
+	}
 }
