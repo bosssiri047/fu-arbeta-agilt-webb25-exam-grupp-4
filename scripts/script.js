@@ -1,6 +1,16 @@
 import { fetchProducts } from "./modules/api.js";
-import { renderHamburgerMenu, renderProducts } from "./modules/gui.js";
-import { addToCart } from "./modules/localeStroage.js";
+import {
+	moveBurgerTopLeft,
+	renderCart,
+	renderHamburgerMenu,
+	renderProducts,
+} from "./modules/gui.js";
+import {
+	addToCart,
+	emptyCart,
+	getCart,
+	removeFromCart,
+} from "./modules/localeStroage.js";
 import { getElementAll } from "./utils/domutils.js";
 
 if (
@@ -24,33 +34,43 @@ if (
 }
 
 function pageSetup() {
-  renderHamburgerMenu();
+	renderHamburgerMenu();
 }
 function foodtruckSetup() {
-  renderHamburgerMenu();
-  loadFoodtruckEventListeners();
+	renderHamburgerMenu();
+	loadFoodtruckEventListeners();
 }
 
 async function menuSetup() {
-  renderHamburgerMenu();
-  const products = await fetchProducts();
-  console.log(products);
-  renderProducts(products);
+	renderHamburgerMenu();
+	const products = await fetchProducts();
+	console.log(products);
+	renderProducts(products);
 
-  const menuRef = getElementAll('.menu__list-item');
-  console.log(menuRef);
+	const menuRef = getElementAll(".menu__list-item");
+	console.log(menuRef);
 
-  for (let list of menuRef) {
-	list.addEventListener('click', (event) => {addToCart(list.id)});
-  }
+	for (let list of menuRef) {
+		list.addEventListener("click", (event) => {
+			addToCart(list.id);
+		});
+	}
 }
 
-function cartSetup() {
-  renderHamburgerMenu();
+async function cartSetup() {
+	renderHamburgerMenu();
+	moveBurgerTopLeft();
+	const products = await fetchProducts();
+	renderCart(products.items);
+
+	if (getCart().length > 0) {
+		console.log("loaded cart event listeners");
+		loadCartEventListeners(products);
+	}
 }
 
 function receiptSetup() {
-  renderHamburgerMenu();
+	renderHamburgerMenu();
 }
 
 // EVENT LISTENERS
@@ -72,4 +92,25 @@ function loadFoodtruckEventListeners() {
 				console.log("foodtruck4");
 			}
 		});
+}
+
+// CART
+function loadCartEventListeners(products) {
+	document.querySelector("#emptyCart").addEventListener("click", () => {
+		emptyCart();
+		renderCart();
+	});
+
+	document.querySelector("#cartList").addEventListener("click", (event) => {
+		const click = event.target.closest(".cart__adjust-btn");
+
+		if (click) {
+			if (click.textContent === "+") {
+				addToCart(click.dataset.id);
+			} else if (click.textContent === "-") {
+				removeFromCart(click.dataset.id);
+			}
+			renderCart(products.items);
+		}
+	});
 }

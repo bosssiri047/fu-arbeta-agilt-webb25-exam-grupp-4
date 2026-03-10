@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<script src="./scripts/script.js" type="module" defer></script>
+		<link rel="stylesheet" href="./styles/style.css" />
+		<title>Kundvagn</title>
+	</head>
+	<body class="cart-body">
+		<header class="header">
+			<!-- <a href="./index.html" class="header__logo-link">
+				<img
+					src="./res/logo_transparent.png"
+					alt="Small YumYum Foodtruck logo"
+					class="header__logo-img"
+				/>
+			</a> -->
+			<a href="./cart.html" class="header__cart-link">
+				<img
+					src="./res/cart_icon.svg"
+					alt="Go to cart"
+					class="header__car-img"
+				/>
+				<span class="header__cart-count" id="cartCount">3</span>
+			</a>
+		</header>
+		<main class="cart">
+			<h1 class="cart__title">Kundvagn</h1>
+			<button class="cart__empty-btn" id="emptyCart">Töm kundvagn</button>
+			<ul class="cart__list" id="cartList">
+				<!-- <li class="cart__list-item">
+					<div class="cart__product-group-top">
+						<h2 class="cart__product-name">Karlstad</h2>
+						<span class="cart__dotted-line"></span>
+						<h3 class="cart__product-price">68 SEK</h3>
+					</div>
+					<div class="cart__count-adjust">
+						<button class="cart__adjust-btn">-</button>
+						<span class="cart__product-count">5</span>
+						<button class="cart__adjust-btn">+</button>
+					</div>
+				</li>
+				<li class="cart__list-item">
+					<div class="cart__product-group-top">
+						<h2 class="cart__product-name">Dip</h2>
+						<span class="cart__dotted-line"></span>
+						<h3 class="cart__product-price">42 SEK</h3>
+					</div>
+					<div class="cart__count-adjust">
+						<button class="cart__adjust-btn">-</button>
+						<span class="cart__product-count">2</span>
+						<button class="cart__adjust-btn">+</button>
+					</div>
+				</li>
+				<li class="cart__list-item">
+					<div class="cart__product-group-top">
+						<h2 class="cart__product-name">Paris</h2>
+						<span class="cart__dotted-line"></span>
+						<h3 class="cart__product-price">9 SEK</h3>
+					</div>
+					<div class="cart__count-adjust">
+						<button class="cart__adjust-btn">-</button>
+						<span class="cart__product-count">1</span>
+						<button class="cart__adjust-btn">+</button>
+					</div>
+				</li> -->
+			</ul>
+		</main>
+		<footer class="cart-checkout">
+			<div class="cart-checkout__total-group">
+				<h2 class="cart-checkout__title">Total</h2>
+				<span class="cart-checkout__total-price" id="cartTotalPrice"
+					>119 SEK</span
+				>
+			</div>
+			<button class="cart-checkout__btn">TAKE MY MONEY!</button>
+		</footer>
+	</body>
+</html>
