@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<script src="./scripts/script.js" type="module" defer></script>
+		<link rel="stylesheet" href="./styles/style.css" />
+		<title>Foodtruck</title>
+	</head>
+	<body>
+		<header class="header">
+			<a href="./index.html" class="header__logo-link">
+				<img
+					src="./res/logo_transparent.png"
+					alt="Small YumYum Foodtruck logo"
+					class="header__logo-img"
+				/>
+			</a>
+			<a href="./cart.html" class="header__cart-link">
+				<img
+					src="./res/cart_icon.svg"
+					alt="Go to cart"
+					class="header__car-img"
+				/>
+				<span class="header__cart-count" id="cartCount">3</span>
+			</a>
+		</header>
+
+		<main class="menu-wrapper">
+            <h2 class="menu__title">MENU</h3>
+            <ul class="menu__list">
+			</ul>
+		</main>
+		<footer class="filter-wrapper">
+			<button type="button" class="filter__button" id="filter__wonton">Wonton</button>
+			<button type="button" class="filter__button" id="filter__dip">Dip</button>
+			<button type="button" class="filter__button" id="filter__drink">Drink</button>
+		</footer>
+	</body>
+</html>

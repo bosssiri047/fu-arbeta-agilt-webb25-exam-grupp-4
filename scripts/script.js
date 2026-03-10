@@ -1,26 +1,26 @@
 import { fetchProducts } from "./modules/api.js";
-import { renderHamburgerMenu, renderProducts } from "./modules/gui.js";
+import { filterMenu, renderHamburgerMenu, renderProducts } from "./modules/gui.js";
 import { addToCart } from "./modules/localeStroage.js";
-import { getElementAll } from "./utils/domutils.js";
+import { getElementAll, getElement, addClass, removeClass } from "./utils/domutils.js";
 
 if (
-  window.location.pathname === "/" ||
-  window.location.pathname.includes("index.html")
+	window.location.pathname === "/" ||
+	window.location.pathname.includes("index.html")
 ) {
-  console.log("index.html");
-  pageSetup();
+	console.log("index.html");
+	pageSetup();
 } else if (window.location.pathname.includes("foodtruck.html")) {
-  console.log("foodtruck.html");
-  foodtruckSetup();
+	console.log("foodtruck.html");
+	foodtruckSetup();
 } else if (window.location.pathname.includes("menu.html")) {
-  console.log("menu.html");
-  menuSetup();
+	console.log("menu.html");
+	menuSetup();
 } else if (window.location.pathname.includes("cart.html")) {
-  console.log("cart.html");
-  cartSetup();
+	console.log("cart.html");
+	cartSetup();
 } else if (window.location.pathname.includes("receipt.html")) {
-  console.log("receipt.html");
-  receiptSetup();
+	console.log("receipt.html");
+	receiptSetup();
 }
 
 function pageSetup() {
@@ -34,17 +34,17 @@ function foodtruckSetup() {
 async function menuSetup() {
   renderHamburgerMenu();
   const products = await fetchProducts();
-  console.log(products);
+  //console.log(products);
   renderProducts(products);
 
-  const menuRef = getElementAll(".menu__list-item");
-  console.log(menuRef);
+  //FILTER BUTTONS
+  const wontonFilterRef = getElement('#filter__wonton');
+  const dipFilterRef = getElement('#filter__dip');
+  const drinkFilterRef = getElement('#filter__drink');
 
-  for (let list of menuRef) {
-    list.addEventListener("click", (event) => {
-      addToCart(list.id);
-    });
-  }
+  wontonFilterRef.addEventListener('click', (event) => {filterMenu('wonton', products), addClass(event.target, 'button-active'), removeClass(dipFilterRef, 'button-active'), removeClass(drinkFilterRef, 'button-active')});
+  dipFilterRef.addEventListener('click', (event) => {filterMenu('dip', products), addClass(event.target, 'button-active'), removeClass(wontonFilterRef, 'button-active'), removeClass(drinkFilterRef, 'button-active')});
+  drinkFilterRef.addEventListener('click', (event) => {filterMenu('drink', products), addClass(event.target, 'button-active'), removeClass(dipFilterRef, 'button-active'), removeClass(wontonFilterRef, 'button-active')});
 }
 
 function cartSetup() {
@@ -59,19 +59,19 @@ function receiptSetup() {
 
 // FOODTRUCK PAGE
 function loadFoodtruckEventListeners() {
-  document
-    .querySelector("#foodTruckContainer")
-    .addEventListener("click", (event) => {
-      const click = event.target;
+	document
+		.querySelector("#foodTruckContainer")
+		.addEventListener("click", (event) => {
+			const click = event.target;
 
-      if (click.closest("#foodTruck1")) {
-        console.log("foodtruck1");
-      } else if (click.closest("#foodTruck2")) {
-        console.log("foodtruck2");
-      } else if (click.closest("#foodTruck3")) {
-        console.log("foodtruck3");
-      } else if (click.closest("#foodTruck4")) {
-        console.log("foodtruck4");
-      }
-    });
+			if (click.closest("#foodTruck1")) {
+				console.log("foodtruck1");
+			} else if (click.closest("#foodTruck2")) {
+				console.log("foodtruck2");
+			} else if (click.closest("#foodTruck3")) {
+				console.log("foodtruck3");
+			} else if (click.closest("#foodTruck4")) {
+				console.log("foodtruck4");
+			}
+		});
 }
