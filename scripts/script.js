@@ -1,10 +1,20 @@
 import { fetchProducts } from "./modules/api.js";
 import {
-	filterMenu,
+	moveBurgerTopLeft,
+  filterMenu,
+	renderCart,
+	renderCartAlertCount,
 	renderHamburgerMenu,
 	renderProducts,
 } from "./modules/gui.js";
-import { addToCart } from "./modules/localeStroage.js";
+import {
+	addOrderToHistory,
+	addToCart,
+	emptyCart,
+	getCart,
+	getOrderById,
+	removeFromCart,
+} from "./modules/localeStroage.js";
 import {
 	getElementAll,
 	getElement,
@@ -98,4 +108,42 @@ function loadFoodtruckEventListeners() {
 				console.log("foodtruck4");
 			}
 		});
+}
+
+// CART
+function loadCartEventListeners(products) {
+	document.querySelector("#emptyCart").addEventListener("click", () => {
+		const cart = getCart();
+
+		if (cart) {
+			emptyCart();
+			renderCart();
+		}
+	});
+
+	document.querySelector("#cartList").addEventListener("click", (event) => {
+		const click = event.target.closest(".cart__adjust-btn");
+
+		if (click) {
+			if (click.textContent === "+") {
+				addToCart(click.dataset.id);
+			} else if (click.textContent === "-") {
+				removeFromCart(click.dataset.id);
+			}
+			renderCart(products);
+		}
+	});
+
+	document.querySelector("#checkoutBtn").addEventListener("click", () => {
+		const cart = getCart();
+
+		if (cart) {
+			const orderId = addOrderToHistory(cart, products);
+			// console.log(orderId);
+			emptyCart();
+			document.querySelector("#cartList").innerHTML = "";
+			// console.log(getOrderById(orderId));
+			location.href = `./order.html?orderId=${orderId}`;
+		}
+	});
 }
