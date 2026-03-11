@@ -3,6 +3,7 @@ import {
 	filterMenu,
 	renderHamburgerMenu,
 	renderProducts,
+	renderCartAlertCount,
 } from "./modules/gui.js";
 import { addToCart } from "./modules/localeStroage.js";
 import {
@@ -45,6 +46,7 @@ async function menuSetup() {
 	const products = await fetchProducts();
 	//console.log(products);
 	renderProducts(products);
+	renderCartAlertCount();
 
 	//FILTER BUTTONS
 	const wontonFilterRef = getElement("#filter__wonton");
@@ -52,22 +54,37 @@ async function menuSetup() {
 	const drinkFilterRef = getElement("#filter__drink");
 
 	wontonFilterRef.addEventListener("click", (event) => {
-		(filterMenu("wonton", products),
-			addClass(event.target, "button-active"),
-			removeClass(dipFilterRef, "button-active"),
-			removeClass(drinkFilterRef, "button-active"));
+		if(event.target.classList.contains("button-active")) {
+			removeClass(event.target, "button-active");
+			renderProducts(products);
+		} else {
+			filterMenu("wonton", products);
+			addClass(event.target, "button-active");
+			removeClass(dipFilterRef, "button-active");
+			removeClass(drinkFilterRef, "button-active");
+		}
 	});
 	dipFilterRef.addEventListener("click", (event) => {
-		(filterMenu("dip", products),
-			addClass(event.target, "button-active"),
-			removeClass(wontonFilterRef, "button-active"),
-			removeClass(drinkFilterRef, "button-active"));
+		if(event.target.classList.contains("button-active")) {
+			removeClass(event.target, "button-active");
+			renderProducts(products);
+		} else {
+			filterMenu("dip", products);
+			addClass(event.target, "button-active");
+			removeClass(wontonFilterRef, "button-active");
+			removeClass(drinkFilterRef, "button-active");
+		}
 	});
 	drinkFilterRef.addEventListener("click", (event) => {
-		(filterMenu("drink", products),
-			addClass(event.target, "button-active"),
-			removeClass(dipFilterRef, "button-active"),
-			removeClass(wontonFilterRef, "button-active"));
+		if(event.target.classList.contains("button-active")) {
+			removeClass(event.target, "button-active");
+			renderProducts(products);
+		} else {
+			filterMenu("drink", products);
+			addClass(event.target, "button-active");
+			removeClass(wontonFilterRef, "button-active");
+			removeClass(dipFilterRef, "button-active");
+		}
 	});
 }
 

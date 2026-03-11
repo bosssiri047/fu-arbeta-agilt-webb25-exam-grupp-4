@@ -1,7 +1,7 @@
 import { createHamburgerMenu } from "../components/navigation.js"
 import { createProduct } from "../components/product.js";
 import { getElement, getElementAll } from "../utils/domutils.js"
-import { addToCart } from "../modules/localeStroage.js";
+import { getCart, addToCart, getCartCount } from "../modules/localeStroage.js";
 
 export function renderHamburgerMenu () {
     getElement('.header').innerHTML += createHamburgerMenu();
@@ -9,6 +9,7 @@ export function renderHamburgerMenu () {
 
 //Render the whole menu
 export function renderProducts (products) {
+    removeMenuRender(); //Remove previous menu render
     //console.log(products);
     products.items.forEach(product => {
         //console.log(product);
@@ -18,7 +19,7 @@ export function renderProducts (products) {
 
     const menuRef = getElementAll('.menu__list-item');
     for(let list of menuRef) {
-	    list.addEventListener('click', (event) => {addToCart(list.id)});
+	    list.addEventListener('click', (event) => {addToCart(list.id), renderCartAlertCount();});
     }
 }
 
@@ -40,11 +41,24 @@ export function filterMenu (type, products) {
 
     const menuRef = getElementAll('.menu__list-item');
     for(let list of menuRef) {
-	    list.addEventListener('click', (event) => {addToCart(list.id)});
+	    list.addEventListener('click', (event) => {addToCart(list.id), renderCartAlertCount();});
     }
 }
 
 //Remove previous menu render
 function removeMenuRender () {
     return getElement('.menu__list').innerHTML = '';
+}
+
+//CART
+export function renderCartAlertCount() {
+	const alertCountRef = document.querySelector("#cartCount");
+
+	if (getCartCount() > 0) {
+		alertCountRef.classList.remove("d-none");
+		alertCountRef.textContent = getCartCount();
+	} else {
+		alertCountRef.classList.add("d-none");
+		alertCountRef.textContent = "";
+	}
 }
