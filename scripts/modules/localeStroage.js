@@ -94,9 +94,91 @@ function saveCart(cart) {
 
 // ORDER HISTORY
 
-export async function addOrderToHistory(cart) {
-	const products = await fetchProducts();
+//saves new order to the history and returns the unique id
+export function addOrderToHistory(cart, products) {
+    console.log(products);
+    const orderHistory = getOrderHistory();
+    const uniqueId = setUniqueId(orderHistory);
+    const date = new Date();
+    const currentOrder = {
+        id: uniqueId,
+        date: `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()} ${date.getHours()}:${date.getMinutes()}`,
+        products: [],
+        totalPrice: 0,
+    };
 
-	for (let item of cart) {
-	}
+    //pushing in each product in to the products array
+    for (let item of cart) {
+        const productData = products.find(
+            (product) => Number(product.id) === Number(item.id),
+        );
+
+        // console.log(productData);
+        const totalPrice = productData.price * item.count;
+
+        //adding on to total price of the whole order each loop
+        currentOrder.totalPrice += productData.price;
+
+        const product = {
+            id: item.id,
+            name: productData.name,
+            count: item.count,
+            price: productData.price,
+            totalPrice: totalPrice,
+        };
+        currentOrder.products.push(product);
+    }
+
+    orderHistory.push(currentOrder);
+    console.log(orderHistory);
+    localStorage.setItem("orderHistory", JSON.stringify(orderHistory));
+    return uniqueId;
+}
+
+// Gets the order using id match, else returns an empty array
+export function getOrderById(id) {
+    const orderHistory = getOrderHistory();
+    const order = orderHistory.find((order) => order.id === id);
+
+    if (order) {
+        return order;
+    } else {
+        return [];
+    }
+}
+
+// Fetches the oder history if it exists or returns an empty array
+function getOrderHistory() {
+    const existingHistory = localStorage.getItem("orderHistory");
+
+    if (existingHistory) {
+        console.log("Order history exists in local storage");
+        return JSON.parse(existingHistory);
+    } else {
+        console.log("Order history doesn't exist in local storage");
+        return [];
+    }
+}
+
+// Randomly generates an id and loops until the generated id is not present in the order history
+function setUniqueId(orderHistory) {
+    let isDone = false;
+    let uniqueId;
+
+    while (!isDone) {
+        uniqueId = "";
+
+        for (let i = 0; i < 10; i++) {
+            const randomNumber = Math.floor(Math.random() * 10);
+            uniqueId += randomNumber;
+        }
+
+        const existingId = orderHistory.find((order) => order.id === uniqueId);
+
+        if (!existingId) {
+            isDone = true;
+        }
+    }
+
+    return uniqueId;
 }
