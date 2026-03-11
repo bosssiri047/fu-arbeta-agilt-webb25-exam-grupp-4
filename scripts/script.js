@@ -1,17 +1,21 @@
 import { fetchProducts } from "./modules/api.js";
 import {
-	filterMenu,
+	moveBurgerTopLeft,
+	renderCart,
+	renderCartAlertCount,
 	renderHamburgerMenu,
 	renderProducts,
 	renderCartAlertCount,
 } from "./modules/gui.js";
-import { addToCart } from "./modules/localeStroage.js";
 import {
-	getElementAll,
-	getElement,
-	addClass,
-	removeClass,
-} from "./utils/domutils.js";
+	addOrderToHistory,
+	addToCart,
+	emptyCart,
+	getCart,
+	getOrderById,
+	removeFromCart,
+} from "./modules/localeStroage.js";
+import { getElementAll } from "./utils/domutils.js";
 
 if (
 	window.location.pathname === "/" ||
@@ -44,14 +48,12 @@ function foodtruckSetup() {
 async function menuSetup() {
 	renderHamburgerMenu();
 	const products = await fetchProducts();
-	//console.log(products);
+	console.log(products);
 	renderProducts(products);
 	renderCartAlertCount();
 
-	//FILTER BUTTONS
-	const wontonFilterRef = getElement("#filter__wonton");
-	const dipFilterRef = getElement("#filter__dip");
-	const drinkFilterRef = getElement("#filter__drink");
+	const menuRef = getElementAll(".menu__list-item");
+	console.log(menuRef);
 
 	wontonFilterRef.addEventListener("click", (event) => {
 		if(event.target.classList.contains("button-active")) {
@@ -88,8 +90,16 @@ async function menuSetup() {
 	});
 }
 
-function cartSetup() {
+async function cartSetup() {
 	renderHamburgerMenu();
+	moveBurgerTopLeft();
+	const products = await fetchProducts();
+	renderCart(products.items);
+
+	if (getCart().length > 0) {
+		console.log("loaded cart event listeners");
+		loadCartEventListeners(products.items);
+	}
 }
 
 function receiptSetup() {
@@ -115,4 +125,42 @@ function loadFoodtruckEventListeners() {
 				console.log("foodtruck4");
 			}
 		});
+}
+
+// CART
+function loadCartEventListeners(products) {
+	document.querySelector("#emptyCart").addEventListener("click", () => {
+		const cart = getCart();
+
+		if (cart) {
+			emptyCart();
+			renderCart();
+		}
+	});
+
+	document.querySelector("#cartList").addEventListener("click", (event) => {
+		const click = event.target.closest(".cart__adjust-btn");
+
+		if (click) {
+			if (click.textContent === "+") {
+				addToCart(click.dataset.id);
+			} else if (click.textContent === "-") {
+				removeFromCart(click.dataset.id);
+			}
+			renderCart(products);
+		}
+	});
+
+	document.querySelector("#checkoutBtn").addEventListener("click", () => {
+		const cart = getCart();
+
+		if (cart) {
+			const orderId = addOrderToHistory(cart, products);
+			// console.log(orderId);
+			emptyCart();
+			document.querySelector("#cartList").innerHTML = "";
+			// console.log(getOrderById(orderId));
+			location.href = `./order.html?orderId=${orderId}`;
+		}
+	});
 }
