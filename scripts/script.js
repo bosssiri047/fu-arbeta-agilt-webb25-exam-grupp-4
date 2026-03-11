@@ -5,17 +5,17 @@ import {
 	renderCartAlertCount,
 	renderHamburgerMenu,
 	renderProducts,
-	renderCartAlertCount,
+	filterMenu,
 } from "./modules/gui.js";
 import {
 	addOrderToHistory,
 	addToCart,
 	emptyCart,
 	getCart,
-	getOrderById,
+	//getOrderById,
 	removeFromCart,
 } from "./modules/localeStroage.js";
-import { getElementAll } from "./utils/domutils.js";
+import { getElement, getElementAll, addClass, removeClass } from "./utils/domutils.js";
 
 if (
 	window.location.pathname === "/" ||
@@ -54,6 +54,10 @@ async function menuSetup() {
 
 	const menuRef = getElementAll(".menu__list-item");
 	console.log(menuRef);
+
+	const wontonFilterRef = getElement('#filter__wonton');
+	const dipFilterRef = getElement('#filter__dip');
+	const drinkFilterRef = getElement('#filter__drink');
 
 	wontonFilterRef.addEventListener("click", (event) => {
 		if(event.target.classList.contains("button-active")) {
