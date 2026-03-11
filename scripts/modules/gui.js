@@ -1,10 +1,10 @@
 import { createCartItem } from "../components/cart.js";
 import { createHamburgerMenu } from "../components/navigation.js";
 import { createProduct } from "../components/product.js";
-import { getElement, getElementAll } from "../utils/domutils.js";
+import { getElement, getElementAll } from "../utils/domutils.js"
+import { getCart, addToCart, getCartCount } from "../modules/localeStroage.js";
 import { fetchProducts } from "./api.js";
-import { addToCart } from "../modules/localeStroage.js";
-import { getCart, getCartCount } from "./localeStroage.js";
+
 
 export function renderHamburgerMenu() {
 	getElement(".header").innerHTML += createHamburgerMenu();
@@ -18,6 +18,7 @@ export function moveBurgerTopLeft() {
 
 //Render the whole menu
 export function renderProducts (products) {
+    removeMenuRender(); //Remove previous menu render
     //console.log(products);
     products.items.forEach(product => {
         //console.log(product);
@@ -27,7 +28,7 @@ export function renderProducts (products) {
 
     const menuRef = getElementAll('.menu__list-item');
     for(let list of menuRef) {
-	    list.addEventListener('click', (event) => {addToCart(list.id)});
+	    list.addEventListener('click', (event) => {addToCart(list.id), renderCartAlertCount();});
     }
 }
 
@@ -49,7 +50,7 @@ export function filterMenu (type, products) {
 
     const menuRef = getElementAll('.menu__list-item');
     for(let list of menuRef) {
-	    list.addEventListener('click', (event) => {addToCart(list.id)});
+	    list.addEventListener('click', (event) => {addToCart(list.id), renderCartAlertCount();});
     }
 }
 

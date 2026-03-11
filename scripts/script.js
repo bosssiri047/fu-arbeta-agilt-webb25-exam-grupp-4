@@ -5,6 +5,7 @@ import {
 	renderCartAlertCount,
 	renderHamburgerMenu,
 	renderProducts,
+	renderCartAlertCount,
 } from "./modules/gui.js";
 import {
 	addOrderToHistory,
@@ -49,15 +50,44 @@ async function menuSetup() {
 	const products = await fetchProducts();
 	console.log(products);
 	renderProducts(products);
+	renderCartAlertCount();
 
 	const menuRef = getElementAll(".menu__list-item");
 	console.log(menuRef);
 
-	for (let list of menuRef) {
-		list.addEventListener("click", (event) => {
-			addToCart(list.id);
-		});
-	}
+	wontonFilterRef.addEventListener("click", (event) => {
+		if(event.target.classList.contains("button-active")) {
+			removeClass(event.target, "button-active");
+			renderProducts(products);
+		} else {
+			filterMenu("wonton", products);
+			addClass(event.target, "button-active");
+			removeClass(dipFilterRef, "button-active");
+			removeClass(drinkFilterRef, "button-active");
+		}
+	});
+	dipFilterRef.addEventListener("click", (event) => {
+		if(event.target.classList.contains("button-active")) {
+			removeClass(event.target, "button-active");
+			renderProducts(products);
+		} else {
+			filterMenu("dip", products);
+			addClass(event.target, "button-active");
+			removeClass(wontonFilterRef, "button-active");
+			removeClass(drinkFilterRef, "button-active");
+		}
+	});
+	drinkFilterRef.addEventListener("click", (event) => {
+		if(event.target.classList.contains("button-active")) {
+			removeClass(event.target, "button-active");
+			renderProducts(products);
+		} else {
+			filterMenu("drink", products);
+			addClass(event.target, "button-active");
+			removeClass(wontonFilterRef, "button-active");
+			removeClass(dipFilterRef, "button-active");
+		}
+	});
 }
 
 async function cartSetup() {
