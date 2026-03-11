@@ -8,7 +8,6 @@
 	--snow: rgba(244, 243, 241, 0.94); /* Text colour */
 	--ash: rgba(238, 238, 238, 1); /* Min beställning background colour */
 	--alert: rgba(235, 87, 87, 1); /* Cart alert */
-	--red: rgb(207, 70, 70);
 }
 
 /* Base */
@@ -287,18 +286,25 @@ a {
 /* MENU */
 .menu-wrapper {
 	margin: 0 1rem;
+	margin: 0 auto;
+	width: 90%;
 	background-color: var(--coal);
 	height: 725px;
 	overflow: auto;
+	scrollbar-gutter: stable both-edges;
 
 	.menu__title {
 		padding: 1rem 2rem;
 		background-color: var(--clay);
+		position: fixed;
+		justify-self: center;
+		width: inherit;
 	}
 
 	.menu__list {
 		height: auto;
 		padding: 0 1rem;
+		padding-top: 4rem;
 		list-style: none;
 
 		.menu__list-item {
@@ -313,7 +319,81 @@ a {
 				}
 			}
 		}
+
+		.menu__list-item:last-child {
+			margin-bottom: 2rem;
+		}
 	}
+}
+
+/* MENU FILTERS */
+.filter-wrapper {
+	margin: 0 auto;
+	width: 90%;
+	display: flex;
+	justify-content: start;
+	gap: 2rem;
+	background-color: var(--coal);
+	padding: 1rem;
+	border-top: 1px solid var(--clay);
+
+	.filter__button {
+		padding: 0.75rem 1rem;
+		background-color: var(--coal);
+		color: var(--snow);
+		font-family: "Fira Sans", sans-serif;
+		border-radius: 10%;
+	}
+
+	.button-active {
+		background-color: var(--clay);
+		color: var(--snow);
+	}
+}
+
+/* LANDING PAGE START */
+.mainhero {
+	display: flex;
+	justify-content: center;
+	flex-direction: column;
+	/* background-color: red; */
+}
+
+.mainhero__logo {
+	display: flex;
+	justify-content: center;
+	padding: 2rem;
+}
+
+.cta {
+	display: flex;
+	justify-content: center;
+	padding: 2rem;
+}
+
+.buttonorder {
+	height: 50px;
+	width: 300px;
+	font-size: x-large;
+	background-color: var(--coal);
+	border-radius: 4px;
+	color: var(--ash);
+}
+
+.aboutus {
+	display: flex;
+	justify-content: center;
+	font-size: x-large;
+	text-align: center;
+	padding: 0 0.3rem;
+}
+
+.aboutus__info {
+	padding: 1.5rem;
+	border-radius: 10px;
+	background-color: white;
+	width: fit-content;
+	color: var(--coal);
 }
 
 /* CART */
