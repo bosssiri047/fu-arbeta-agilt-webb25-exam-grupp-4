@@ -12,7 +12,7 @@ import {
 	addToCart,
 	emptyCart,
 	getCart,
-	//getOrderById,
+	getOrderById,
 	removeFromCart,
 } from "./modules/localeStroage.js";
 import { getElement, getElementAll, addClass, removeClass } from "./utils/domutils.js";
