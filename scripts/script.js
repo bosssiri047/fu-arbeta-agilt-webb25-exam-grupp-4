@@ -2,13 +2,16 @@ import { fetchProducts } from "./modules/api.js";
 import {
 	moveBurgerTopLeft,
 	renderCart,
+	renderCartAlertCount,
 	renderHamburgerMenu,
 	renderProducts,
 } from "./modules/gui.js";
 import {
+	addOrderToHistory,
 	addToCart,
 	emptyCart,
 	getCart,
+	getOrderById,
 	removeFromCart,
 } from "./modules/localeStroage.js";
 import { getElementAll } from "./utils/domutils.js";
@@ -65,7 +68,7 @@ async function cartSetup() {
 
 	if (getCart().length > 0) {
 		console.log("loaded cart event listeners");
-		loadCartEventListeners(products);
+		loadCartEventListeners(products.items);
 	}
 }
 
@@ -97,8 +100,12 @@ function loadFoodtruckEventListeners() {
 // CART
 function loadCartEventListeners(products) {
 	document.querySelector("#emptyCart").addEventListener("click", () => {
-		emptyCart();
-		renderCart();
+		const cart = getCart();
+
+		if (cart) {
+			emptyCart();
+			renderCart();
+		}
 	});
 
 	document.querySelector("#cartList").addEventListener("click", (event) => {
@@ -110,7 +117,20 @@ function loadCartEventListeners(products) {
 			} else if (click.textContent === "-") {
 				removeFromCart(click.dataset.id);
 			}
-			renderCart(products.items);
+			renderCart(products);
+		}
+	});
+
+	document.querySelector("#checkoutBtn").addEventListener("click", () => {
+		const cart = getCart();
+
+		if (cart) {
+			const orderId = addOrderToHistory(cart, products);
+			// console.log(orderId);
+			emptyCart();
+			document.querySelector("#cartList").innerHTML = "";
+			// console.log(getOrderById(orderId));
+			location.href = `./order.html?orderId=${orderId}`;
 		}
 	});
 }

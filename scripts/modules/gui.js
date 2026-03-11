@@ -3,7 +3,7 @@ import { createHamburgerMenu } from "../components/navigation.js";
 import { createProduct } from "../components/product.js";
 import { getElement } from "../utils/domutils.js";
 import { fetchProducts } from "./api.js";
-import { getCart } from "./localeStroage.js";
+import { getCart, getCartCount } from "./localeStroage.js";
 
 export function renderHamburgerMenu() {
 	getElement(".header").innerHTML += createHamburgerMenu();
@@ -26,6 +26,7 @@ export function renderProducts(products) {
 
 //CART
 export function renderCart(products) {
+	renderCartAlertCount();
 	const cart = getCart();
 	const ulRef = document.querySelector("#cartList");
 	ulRef.innerHTML = "";
@@ -41,4 +42,16 @@ export function renderCart(products) {
 	}
 
 	document.querySelector("#cartTotalPrice").textContent = `${totalPrice} SEK`;
+}
+
+export function renderCartAlertCount() {
+	const alertCountRef = document.querySelector("#cartCount");
+
+	if (getCartCount() > 0) {
+		alertCountRef.classList.remove("d-none");
+		alertCountRef.textContent = getCartCount();
+	} else {
+		alertCountRef.classList.add("d-none");
+		alertCountRef.textContent = "";
+	}
 }
