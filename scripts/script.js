@@ -15,7 +15,12 @@ import {
 	getOrderById,
 	removeFromCart,
 } from "./modules/localeStroage.js";
-import { getElement, getElementAll, addClass, removeClass } from "./utils/domutils.js";
+import {
+	getElement,
+	getElementAll,
+	addClass,
+	removeClass,
+} from "./utils/domutils.js";
 
 if (
 	window.location.pathname === "/" ||
@@ -35,6 +40,9 @@ if (
 } else if (window.location.pathname.includes("receipt.html")) {
 	console.log("receipt.html");
 	receiptSetup();
+} else if (window.location.pathname.includes("order.html")) {
+	console.log("order.html");
+	orderSetup();
 }
 
 function pageSetup() {
@@ -55,12 +63,12 @@ async function menuSetup() {
 	const menuRef = getElementAll(".menu__list-item");
 	console.log(menuRef);
 
-	const wontonFilterRef = getElement('#filter__wonton');
-	const dipFilterRef = getElement('#filter__dip');
-	const drinkFilterRef = getElement('#filter__drink');
+	const wontonFilterRef = getElement("#filter__wonton");
+	const dipFilterRef = getElement("#filter__dip");
+	const drinkFilterRef = getElement("#filter__drink");
 
 	wontonFilterRef.addEventListener("click", (event) => {
-		if(event.target.classList.contains("button-active")) {
+		if (event.target.classList.contains("button-active")) {
 			removeClass(event.target, "button-active");
 			renderProducts(products);
 		} else {
@@ -71,7 +79,7 @@ async function menuSetup() {
 		}
 	});
 	dipFilterRef.addEventListener("click", (event) => {
-		if(event.target.classList.contains("button-active")) {
+		if (event.target.classList.contains("button-active")) {
 			removeClass(event.target, "button-active");
 			renderProducts(products);
 		} else {
@@ -82,7 +90,7 @@ async function menuSetup() {
 		}
 	});
 	drinkFilterRef.addEventListener("click", (event) => {
-		if(event.target.classList.contains("button-active")) {
+		if (event.target.classList.contains("button-active")) {
 			removeClass(event.target, "button-active");
 			renderProducts(products);
 		} else {
@@ -103,6 +111,15 @@ async function cartSetup() {
 	if (getCart().length > 0) {
 		console.log("loaded cart event listeners");
 		loadCartEventListeners(products.items);
+	}
+}
+
+function orderSetup() {
+	const params = new URLSearchParams(window.location.search);
+	const value = params.get("orderId");
+	if (value) {
+		document.querySelector("#orderId").textContent = `#${value}`;
+		loadOrderEventListeners(value);
 	}
 }
 
@@ -166,5 +183,13 @@ function loadCartEventListeners(products) {
 			// console.log(getOrderById(orderId));
 			location.href = `./order.html?orderId=${orderId}`;
 		}
+	});
+}
+
+// ORDER
+
+function loadOrderEventListeners(orderId) {
+	document.querySelector("#viewReceipt").addEventListener("click", () => {
+		location.href = `./receipt.html?orderId=${orderId}`;
 	});
 }
