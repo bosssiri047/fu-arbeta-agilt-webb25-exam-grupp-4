@@ -1,7 +1,6 @@
 import { fetchProducts } from "./modules/api.js";
 import {
 	moveBurgerTopLeft,
-  filterMenu,
 	renderCart,
 	renderCartAlertCount,
 	renderHamburgerMenu,
@@ -15,12 +14,7 @@ import {
 	getOrderById,
 	removeFromCart,
 } from "./modules/localeStroage.js";
-import {
-	getElementAll,
-	getElement,
-	addClass,
-	removeClass,
-} from "./utils/domutils.js";
+import { getElementAll } from "./utils/domutils.js";
 
 if (
 	window.location.pathname === "/" ||
@@ -53,36 +47,29 @@ function foodtruckSetup() {
 async function menuSetup() {
 	renderHamburgerMenu();
 	const products = await fetchProducts();
-	//console.log(products);
+	console.log(products);
 	renderProducts(products);
 
-	//FILTER BUTTONS
-	const wontonFilterRef = getElement("#filter__wonton");
-	const dipFilterRef = getElement("#filter__dip");
-	const drinkFilterRef = getElement("#filter__drink");
+	const menuRef = getElementAll(".menu__list-item");
+	console.log(menuRef);
 
-	wontonFilterRef.addEventListener("click", (event) => {
-		(filterMenu("wonton", products),
-			addClass(event.target, "button-active"),
-			removeClass(dipFilterRef, "button-active"),
-			removeClass(drinkFilterRef, "button-active"));
-	});
-	dipFilterRef.addEventListener("click", (event) => {
-		(filterMenu("dip", products),
-			addClass(event.target, "button-active"),
-			removeClass(wontonFilterRef, "button-active"),
-			removeClass(drinkFilterRef, "button-active"));
-	});
-	drinkFilterRef.addEventListener("click", (event) => {
-		(filterMenu("drink", products),
-			addClass(event.target, "button-active"),
-			removeClass(dipFilterRef, "button-active"),
-			removeClass(wontonFilterRef, "button-active"));
-	});
+	for (let list of menuRef) {
+		list.addEventListener("click", (event) => {
+			addToCart(list.id);
+		});
+	}
 }
 
-function cartSetup() {
+async function cartSetup() {
 	renderHamburgerMenu();
+	moveBurgerTopLeft();
+	const products = await fetchProducts();
+	renderCart(products.items);
+
+	if (getCart().length > 0) {
+		console.log("loaded cart event listeners");
+		loadCartEventListeners(products.items);
+	}
 }
 
 function receiptSetup() {
