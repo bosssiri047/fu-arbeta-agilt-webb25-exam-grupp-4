@@ -13,10 +13,10 @@ export function createHamburgerMenu () {
                     <a href="./menu.html" class="nav-bar__link">Menu</a>
                 </li>
                 <li class="nav-bar__item">
-                    <a href="./foodtruck.html" class="nav-bar__link">Locations</a>
+                    <a href="./cart.html" class="nav-bar__link">Your cart</a>
                 </li>
                 <li class="nav-bar__item">
-                    <a href="./cart.html" class="nav-bar__link">Your cart</a>
+                    <a href="./foodtruck.html" class="nav-bar__link">Locations</a>
                 </li>
             </ul>
         </nav>
