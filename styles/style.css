@@ -404,12 +404,15 @@ a {
 }
 
 .buttonorder {
+	display: grid;
+	place-items: center;
 	height: 50px;
 	width: 300px;
 	font-size: x-large;
 	background-color: var(--coal);
 	border-radius: 4px;
 	color: var(--ash);
+	cursor: pointer;
 }
 
 .aboutus {
