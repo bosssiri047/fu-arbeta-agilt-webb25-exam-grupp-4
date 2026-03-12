@@ -55,7 +55,7 @@ a {
 		z-index: 999;
 		cursor: pointer;
 		padding: 2.5rem;
-		background-color: var(--mint-green);
+		background-color: var(--clay);
 		border-radius: 30%;
 	}
 
@@ -143,6 +143,7 @@ a {
 		transform: translateX(100%);
 		padding: 0;
 		margin: 0;
+		margin-top: -1rem;
 		gap: 3rem;
 
 		.nav-bar__list {
@@ -287,10 +288,12 @@ a {
 .menu-wrapper {
 	margin: 0 auto;
 	width: 90%;
-	height: 725px;
-	overflow: scroll;
+	height: 70vh;
+	overflow: auto;
 	scrollbar-gutter: stable both-edges;
 	background-color: var(--coal);
+	border-top-left-radius: 5px;
+	border-top-right-radius: 5px;
 
 	.menu__title {
 		padding: 1rem 2rem;
@@ -298,6 +301,8 @@ a {
 		justify-self: center;
 		width: inherit;
 		background-color: var(--clay);
+		border-top-left-radius: 5px;
+		border-top-right-radius: 5px;
 	}
 
 	.menu__list {
@@ -328,11 +333,13 @@ a {
 	margin: 0 auto;
 	width: 90%;
 	display: flex;
-	justify-content: start;
+	justify-content: space-evenly;
 	gap: 2rem;
 	background-color: var(--coal);
 	padding: 1rem;
 	border-top: 1px solid var(--clay);
+	border-bottom-left-radius: 10px;
+	border-bottom-right-radius: 10px;
 
 	.filter__button {
 		padding: 0.75rem 1rem;
