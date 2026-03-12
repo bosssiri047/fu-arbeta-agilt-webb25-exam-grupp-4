@@ -41,6 +41,9 @@ if (
 } else if (window.location.pathname.includes("receipt.html")) {
   console.log("receipt.html");
   receiptSetup();
+} else if (window.location.pathname.includes("order.html")) {
+  console.log("order.html");
+  orderSetup();
 }
 
 function pageSetup() {
@@ -112,10 +115,18 @@ async function cartSetup() {
   }
 }
 
-// RECEIPT
-// function receiptSetup() {
-//   renderHamburgerMenu();
-// }
+function orderSetup() {
+  const params = new URLSearchParams(window.location.search);
+  const value = params.get("orderId");
+  if (value) {
+    document.querySelector("#orderId").textContent = `#${value}`;
+    loadOrderEventListeners(value);
+  }
+}
+
+function receiptSetup() {
+  renderHamburgerMenu();
+}
 
 // EVENT LISTENERS
 
@@ -173,5 +184,13 @@ function loadCartEventListeners(products) {
       // console.log(getOrderById(orderId));
       location.href = `./order.html?orderId=${orderId}`;
     }
+  });
+}
+
+// ORDER
+
+function loadOrderEventListeners(orderId) {
+  document.querySelector("#viewReceipt").addEventListener("click", () => {
+    location.href = `./receipt.html?orderId=${orderId}`;
   });
 }
