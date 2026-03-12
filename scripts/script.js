@@ -6,6 +6,8 @@ import {
 	renderHamburgerMenu,
 	renderProducts,
 	filterMenu,
+	renderMap,
+	closeMap,
 } from "./modules/gui.js";
 import {
 	addOrderToHistory,
@@ -51,6 +53,7 @@ function pageSetup() {
 function foodtruckSetup() {
 	renderHamburgerMenu();
 	loadFoodtruckEventListeners();
+	renderCartAlertCount();
 }
 
 async function menuSetup() {
@@ -138,13 +141,25 @@ function loadFoodtruckEventListeners() {
 
 			if (click.closest("#foodTruck1")) {
 				console.log("foodtruck1");
+				renderMap(1);
 			} else if (click.closest("#foodTruck2")) {
 				console.log("foodtruck2");
+				renderMap(2);
 			} else if (click.closest("#foodTruck3")) {
 				console.log("foodtruck3");
+				renderMap(3);
 			} else if (click.closest("#foodTruck4")) {
 				console.log("foodtruck4");
+				renderMap(4);
 			}
+		});
+}
+
+export function loadMapEventListeners() {
+	document
+		.querySelector("#mapCloseBtn")
+		.addEventListener("click", (event) => {
+			closeMap();
 		});
 }
 
