@@ -7,16 +7,16 @@ export function createHamburgerMenu () {
         <nav class="nav-bar">
             <ul class="nav-bar__list">
                 <li class="nav-bar__item">
-                    <a href="./index.html" class="nav-bar__link nav-bar__link">Home</a>
+                    <a href="./index.html" class="nav-bar__link nav-bar__link">Hemsida</a>
                 </li>
                 <li class="nav-bar__item">
-                    <a href="./menu.html" class="nav-bar__link">Menu</a>
+                    <a href="./menu.html" class="nav-bar__link">Meny</a>
                 </li>
                 <li class="nav-bar__item">
-                    <a href="./cart.html" class="nav-bar__link">Your cart</a>
+                    <a href="./cart.html" class="nav-bar__link">Kundvagn</a>
                 </li>
                 <li class="nav-bar__item">
-                    <a href="./foodtruck.html" class="nav-bar__link">Locations</a>
+                    <a href="./foodtruck.html" class="nav-bar__link">Foodtruckarna</a>
                 </li>
             </ul>
         </nav>
