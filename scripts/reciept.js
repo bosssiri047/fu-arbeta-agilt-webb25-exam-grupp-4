@@ -1,7 +1,10 @@
 import { orderRecipt } from "./components/receipt.js";
 import { getOrderById } from "./modules/localeStroage.js";
 import { renderHamburgerMenu } from "./modules/gui.js";
-import { getElement } from "../utils/domutils.js";
+import { getElement } from "./utils/domutils.js";
+// import { getElement } from "../utils/domUtils.js";
+
+getElement;
 
 export function receiptSetup() {
   renderHamburgerMenu();
@@ -17,10 +20,11 @@ export function receiptSetup() {
   // hämta jonathans
   const order = getOrderById(orderId);
 
-  if (!order || length === 0) {
+  if (!order || order.length === 0) {
     getElement("main").innerHTML = "<p>Order är tom</p>";
     return;
   }
   // skriv ut (visa kvitto)
   getElement("main").innerHTML = orderRecipt(order);
+  console.log("order ska visas");
 }
