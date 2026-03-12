@@ -49,6 +49,7 @@ if (
 
 function pageSetup() {
 	renderHamburgerMenu();
+	renderCartAlertCount();
 }
 function foodtruckSetup() {
 	renderHamburgerMenu();
