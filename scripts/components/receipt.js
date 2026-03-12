@@ -2,16 +2,14 @@ export function orderRecipt(order) {
   //Skapa fram kvitto (strings)
   let reciptItemsList = "";
 
-  // memo ändrat item till procuct
-  for (const item of order.product);
-  {
+  // memo ändrat item till procuct -loopa igeno malla produkter i ordern
+  for (const item of order.products) {
     // bygg i hop kvittot och använd Jonathans
     const radTotalt = item.price * item.count;
 
-    // bygg ihop kvitto
-
+    // Bygg HTML för en produktrad och lägg i lådan
     reciptItemsList += `
-    <li class="kvitto-item>
+    <li class="kvitto-item">
     <section class="kvitto-item-row">
     <p class="kvitto-item-name"><strong>${item.name}</strong></p>
     <p class="kvitto-item-price">${radTotalt} SEK</p>
@@ -21,34 +19,34 @@ export function orderRecipt(order) {
     `;
   }
 
-  // Returnera hela kvittot
-  return `<main class="kvitto-wrapper" id="kvittoWrapper">
+  // Returnera hela kvittot med all HTML
+  return `
+    <main class="kvitto-wrapper">
       <section class="kvitto">
-        <figure class="mainherologo" id="mainLogo">
+        <figure class="mainherologo">
           <img class="kvittohero" src="res/logo.png" alt="mainhero-img" />
-          <p class="kvittoid" id="kvittoId"#${order.id}</p>
+          <p class="kvittoid">#${order.id}</p>
         </figure>
       </section>
-      <!-- Hero End -->
-      <!-- Kvitto Start -->
+      
       <section class="kvitto-wrapper-info">
-        <h2 class="kvitto-title" id="kvittoTitle">KVITTO</h2>
-        <ul class="kvitto-list" id="kvittoList">
-          <!-- här fyller JS i alla produkter -->
+        <h2 class="kvitto-title">KVITTO</h2>
+        <ul class="kvitto-list">
+          ${reciptItemsList} 
         </ul>
-        <!-- kvitto footer start -->
+        
         <section>
-          <p class="kvitto-totalsumma" id="kvittoTotalSumma">Total summa</p>
-          <p class="kvitto-moms" id="kvittoMoms">ink 20%moms</p>
-          <p class="kvitto-total-price" id="kvittoTotalPrice">${order.totalPrice} SEK</p>
+          <p class="kvitto-totalsumma"><strong>TOTALT</strong></p>
+          <p class="kvitto-moms">inkl 20% moms</p>
+          <p class="kvitto-total-price">${order.totalPrice} SEK</p>
         </section>
-        <!-- kvitto footer end -->
       </section>
 
-      <section class="kvittoorder" id="kvittoOrder">
-        <button class="button makeorderBtn" id="makeOrderBtn">
+      <section class="kvittoorder">
+        <button class="button makeorderBtn">
           Gör en ny Beställning
         </button>
       </section>
-    </main>`;
+    </main>
+  `;
 }

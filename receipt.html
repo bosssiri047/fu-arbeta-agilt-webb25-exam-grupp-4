@@ -5,6 +5,7 @@
     <link rel="stylesheet" href="styles/style.css" />
     <!-- Styles End -->
     <script src="./scripts/script.js" type="module" defer></script>
+    <script></script>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Kvitto Sida</title>
@@ -30,33 +31,27 @@
     </header>
     <!-- Header End -->
     <!-- Kvitto Wrapper Start -->
-    <main class="kvitto-wrapper" id="kvittoWrapper">
+    <main class="kvitto-wrapper">
       <section class="kvitto">
-        <figure class="mainherologo" id="mainLogo">
+        <figure class="mainherologo">
           <img class="kvittohero" src="res/logo.png" alt="mainhero-img" />
-          <p class="kvittoid" id="kvittoId"></p>
+          <p class="kvittoid"></p>
         </figure>
       </section>
-      <!-- Hero End -->
-      <!-- Kvitto Start -->
+
       <section class="kvitto-wrapper-info">
-        <h2 class="kvitto-title" id="kvittoTitle">KVITTO</h2>
-        <ul class="kvitto-list" id="kvittoList">
-          <!-- här fyller JS i alla produkter -->
-        </ul>
-        <!-- kvitto footer start -->
+        <h2 class="kvitto-title">KVITTO</h2>
+        <ul class="kvitto-list"></ul>
+
         <section>
-          <p class="kvitto-totalsumma" id="kvittoTotalSumma">Total summa</p>
-          <p class="kvitto-moms" id="kvittoMoms">ink</p>
-          <p class="kvitto-total-price" id="kvittoTotalPrice"></p>
+          <p class="kvitto-totalsumma"><strong>TOTALT</strong></p>
+          <p class="kvitto-moms">inkl 20% moms</p>
+          <p class="kvitto-total-price"></p>
         </section>
-        <!-- kvitto footer end -->
       </section>
 
-      <section class="kvittoorder" id="kvittoOrder">
-        <button class="button makeorderBtn" id="makeOrderBtn">
-          Gör en ny Beställning
-        </button>
+      <section class="kvittoorder">
+        <button class="button makeorderBtn">Gör en ny Beställning</button>
       </section>
     </main>
     <!-- Kvitto Wrapper End -->

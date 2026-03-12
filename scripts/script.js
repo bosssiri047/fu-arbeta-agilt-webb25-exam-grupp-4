@@ -1,5 +1,5 @@
 import { fetchProducts } from "./modules/api.js";
-import { receiptSetup } from "./reciept.js";
+
 import {
   moveBurgerTopLeft,
   renderCart,
@@ -16,6 +16,7 @@ import {
   getOrderById,
   removeFromCart,
 } from "./modules/localeStroage.js";
+import { receiptSetup } from "./reciept.js";
 import {
   getElement,
   getElementAll,
@@ -40,6 +41,7 @@ if (
   cartSetup();
 } else if (window.location.pathname.includes("receipt.html")) {
   console.log("receipt.html");
+  //   receiptSetup();
   receiptSetup();
 } else if (window.location.pathname.includes("order.html")) {
   console.log("order.html");
@@ -124,9 +126,9 @@ function orderSetup() {
   }
 }
 
-function receiptSetup() {
-  renderHamburgerMenu();
-}
+// function receiptSetup() {
+//   renderHamburgerMenu();
+// }
 
 // EVENT LISTENERS
 
