@@ -613,6 +613,29 @@ a {
   max-width: 100px;
 }
 
+.kvitto-wrapper {
+  flex: 1;
+  border-top: dotted 1px black;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  margin-bottom: 1rem;
+  background-color: red;
+}
+
+.kvitto-item {
+  text-align: center;
+  font-size: 2.25rem;
+  font-weight: 700;
+  color: var(--coal);
+  margin: 0.5rem 0;
+  border-bottom: dotted 2px black;
+  flex: 1;
+  margin: 0 0.5rem;
+  position: relative;
+  top: -4px;
+}
+
 .kvitto {
   display: flex;
   flex-direction: column;

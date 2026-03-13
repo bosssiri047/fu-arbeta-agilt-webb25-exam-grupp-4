@@ -29,4 +29,6 @@ export function receiptSetup() {
   // visa kvitto med funktion v skapat
   getElement("main").innerHTML = orderRecipt(order);
   console.log("order ska visas", order);
+
+  // knapp beställ ny order
 }
