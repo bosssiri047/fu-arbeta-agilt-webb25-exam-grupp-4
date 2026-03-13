@@ -6,6 +6,7 @@ import { getCart, addToCart, getCartCount } from "../modules/localeStroage.js";
 import { fetchProducts } from "./api.js";
 import { createMapOverlay } from "../components/foodtruck.js";
 import { loadMapEventListeners } from "../script.js";
+import { createKvittoItem } from "../components/kvitto.js";
 
 export function renderHamburgerMenu() {
 	getElement(".header").innerHTML += createHamburgerMenu();
@@ -109,4 +110,16 @@ export function renderMap(id) {
 
 export function closeMap() {
 	document.querySelector(".map-overlay").remove();
+}
+
+//Kvitto
+export function renderKvitto(products) {
+	const ulRef = document.querySelector("#receiptList");
+	ulRef.innerHTML = "";
+
+	for (let item of products.products) {
+		ulRef.innerHTML += createKvittoItem(item);
+	}
+
+	document.querySelector("#receiptTotalPrice").textContent = `${products.totalPrice} SEK`;
 }

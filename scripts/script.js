@@ -8,6 +8,7 @@ import {
 	filterMenu,
 	renderMap,
 	closeMap,
+	renderKvitto,
 } from "./modules/gui.js";
 import {
 	addOrderToHistory,
@@ -128,7 +129,14 @@ function orderSetup() {
 }
 
 function receiptSetup() {
-	renderHamburgerMenu();
+	const params = new URLSearchParams(window.location.search);
+	const id = params.get("orderId");
+	const products = getOrderById(id);
+	console.log(products);
+	if (id) {
+		document.querySelector(".receipt__id").textContent = `#${id}`;
+	}
+	renderKvitto(products);
 }
 
 // EVENT LISTENERS
