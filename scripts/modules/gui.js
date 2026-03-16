@@ -7,6 +7,7 @@ import { fetchProducts } from "./api.js";
 import { createMapOverlay } from "../components/foodtruck.js";
 import { loadMapEventListeners } from "../script.js";
 import { createKvittoItem } from "../components/kvitto.js";
+import { createLogin } from "../components/login.js";
 
 export function renderHamburgerMenu() {
 	getElement(".header").innerHTML += createHamburgerMenu();
@@ -121,5 +122,13 @@ export function renderKvitto(products) {
 		ulRef.innerHTML += createKvittoItem(item);
 	}
 
-	document.querySelector("#receiptTotalPrice").textContent = `${products.totalPrice} SEK`;
+	document.querySelector("#receiptTotalPrice").textContent =
+		`${products.totalPrice} SEK`;
+}
+
+//LOGIN
+
+export function renderLogin() {
+	const bodyRef = document.querySelector("body");
+	bodyRef.innerHTML = createLogin();
 }
