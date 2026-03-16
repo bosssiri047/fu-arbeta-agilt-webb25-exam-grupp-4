@@ -1,5 +1,5 @@
-export function createHamburgerMenu () {
-    return `
+export function createHamburgerMenu() {
+  return `
         <input type="checkbox" class="header__burger" id="burger"/>
         <label for="burger" class="header__burger-label" aria-label="hamburger-menu">
             <span class="header__burger-btn"></span>
@@ -17,6 +17,9 @@ export function createHamburgerMenu () {
                 </li>
                 <li class="nav-bar__item">
                     <a href="./foodtruck.html" class="nav-bar__link">Foodtruckarna</a>
+                </li>
+                              <li class="nav-bar__item">
+                    <a href="./aboutus.html" class="nav-bar__link">About Us</a>
                 </li>
             </ul>
         </nav>
