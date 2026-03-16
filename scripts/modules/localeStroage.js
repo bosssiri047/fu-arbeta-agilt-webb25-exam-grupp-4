@@ -148,7 +148,7 @@ export function getOrderById(id) {
 }
 
 // Fetches the oder history if it exists or returns an empty array
-function getOrderHistory() {
+export function getOrderHistory() {
 	const existingHistory = localStorage.getItem("orderHistory");
 
 	if (existingHistory) {
@@ -181,4 +181,35 @@ function setUniqueId(orderHistory) {
 	}
 
 	return uniqueId;
+}
+
+// LOGIN / REGISTRATION
+export function setCurrentUser(user) {
+    const currentUser = {
+        name: user.username,
+        role: user.role,
+        // id later
+    };
+
+    localStorage.setItem("currentUser", JSON.stringify(currentUser));
+}
+
+//Function to help figure out what to show on the site
+export function userLoggedIn() {
+    const currentUser = JSON.parse(localStorage.getItem("currentUser"));
+	console.log(currentUser);
+    if (currentUser) {
+        if (currentUser.role === "admin") {
+            return "admin";
+        } else {
+            return "user";
+        }
+    } else {
+        return "guest";
+    }
+}
+
+//Removes the currentUser localstorage / loggin out
+export function logOutUser() {
+    localStorage.removeItem("currentUser");
 }

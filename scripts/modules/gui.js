@@ -7,6 +7,7 @@ import { fetchProducts } from "./api.js";
 import { createMapOverlay } from "../components/foodtruck.js";
 import { loadMapEventListeners } from "../script.js";
 import { createKvittoItem } from "../components/kvitto.js";
+import { createHistoryItem } from "../components/history.js";
 
 export function renderHamburgerMenu() {
 	getElement(".header").innerHTML += createHamburgerMenu();
@@ -122,4 +123,14 @@ export function renderKvitto(products) {
 	}
 
 	document.querySelector("#receiptTotalPrice").textContent = `${products.totalPrice} SEK`;
+}
+
+//History
+export function renderHistory(orders) {
+	const ulRef = document.querySelector("#historyList");
+	ulRef.innerHTML = "";
+
+	for (let order of orders) {
+		ulRef.innerHTML += createHistoryItem(order);
+	}
 }

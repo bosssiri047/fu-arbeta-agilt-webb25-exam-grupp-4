@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<script src="./scripts/script.js" type="module" defer></script>
+		<link rel="stylesheet" href="./styles/style.css" />
+		<title>Din Profil</title>
+	</head>
+	<body class="profile-body">
+		<header class="header">
+			<a href="./index.html" class="header__logo-link">
+				<img
+					src="./res/logo_transparent.png"
+					alt="Small YumYum Foodtruck logo"
+					class="header__logo-img"
+				/>
+			</a>
+            <button type="button" class="logoutBtn">Log Out</button>
+		</header>
+		<main class="profile-main">
+            <section class="profile-wrapper">
+                <img src="" alt="profileImg" class="profile-img">
+                <section class="profile__group-username">
+                    <h3 class="profile-username">Username: </h3>
+                    <button type="button" class="username-edit">Edit</button>
+                </section>
+                <section class="profile__group-password">
+                    <h3 class="profile-password">Password: </h3>
+                    <button type="button" class="password-edit">Edit</button>
+                </section>
+                <section class="profile__group-email">
+                    <h3 class="profile-email">Email: </h3>
+                    <button type="button" class="email-edit">Edit</button>
+                </section>
+            </section>
+		</main>
+        <footer class="profile-footer">
+            <section class="history-wrapper">
+                <h2 class="history-title">Order History</h2>
+                <ul class="history__list" id="historyList">
+
+			    </ul>
+            </section>
+        </footer>
+	</body>
+</html>

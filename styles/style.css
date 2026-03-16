@@ -143,7 +143,7 @@ a {
 		transform: translateX(100%);
 		padding: 0;
 		margin: 0;
-		margin-top: -1rem;
+		inset: 0;
 		gap: 3rem;
 
 		.nav-bar__list {
@@ -735,5 +735,70 @@ a {
 		font-size: 1.5rem;
 		padding: 1.5rem 0.75rem;
 		cursor: pointer;
+	}
+}
+
+/* PROFIL */
+.logoutBtn {
+	background-color: var(--alert);
+	color: var(--ash);
+	padding: 0 1rem;
+}
+
+.profile-body {
+	background-color: var(--coal);
+	background-image: none;
+	width: 100vw;
+	height: 100vh;
+
+	.profile-wrapper {
+		display: flex;
+		flex-direction: column;
+		justify-self: center;
+		gap: 2rem;
+		padding: 1rem;
+		border: 2px solid var(--clay);
+		width: 90%;
+
+		.profile__group-username, .profile__group-password, .profile__group-email {
+			display: flex;
+			justify-content: space-between;
+		}
+
+		.profile-img {
+			align-self: center;
+			border-radius: 50%;
+		}
+	}
+
+	.history-wrapper {
+		margin-top: 1rem;
+		display: flex;
+		flex-direction: column;
+		justify-self: center;
+		width: 90vw;
+		max-height: 40vh;
+		border: 2px solid var(--clay);
+
+		.history-title {
+			padding: 1rem;
+			background-color: var(--clay);
+		}
+
+		.history__list {
+			overflow: auto;
+			scrollbar-gutter: stable both-edges;
+			padding: 1.5rem 1rem;
+			list-style: none;
+			display: flex;
+			flex-direction: column;
+			gap: 1.75rem;
+			
+			.history__list-item {
+				display: flex;
+				justify-content: space-between;
+				border-bottom: 1px dashed var(--clay);
+			}
+		}
 	}
 }

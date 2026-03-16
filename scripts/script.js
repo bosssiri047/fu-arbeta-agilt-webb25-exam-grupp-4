@@ -1,4 +1,4 @@
-import { fetchProducts } from "./modules/api.js";
+import { fetchProducts, fetchUsers } from "./modules/api.js";
 import {
 	moveBurgerTopLeft,
 	renderCart,
@@ -9,6 +9,7 @@ import {
 	renderMap,
 	closeMap,
 	renderKvitto,
+	renderHistory,
 } from "./modules/gui.js";
 import {
 	addOrderToHistory,
@@ -16,7 +17,10 @@ import {
 	emptyCart,
 	getCart,
 	getOrderById,
+	getOrderHistory,
+	logOutUser,
 	removeFromCart,
+	setCurrentUser,
 } from "./modules/localeStroage.js";
 import {
 	getElement,
@@ -46,6 +50,9 @@ if (
 } else if (window.location.pathname.includes("order.html")) {
 	console.log("order.html");
 	orderSetup();
+} else if (window.location.pathname.includes("profile.html")) {
+	console.log("profile.html");
+	profileSetup();
 }
 
 function pageSetup() {
@@ -137,6 +144,57 @@ function receiptSetup() {
 		document.querySelector(".receipt__id").textContent = `#${id}`;
 	}
 	renderKvitto(products);
+}
+
+async function profileSetup() {
+	renderHamburgerMenu();
+	const logOutBtnRef = getElement('.logoutBtn');
+	const profileImgRef = getElement('.profile-img');
+	const usernameRef = getElement('.profile-username');
+	const passwordRef = getElement('.profile-password');
+	const emailRef = getElement('.profile-email');
+	const editUsernameRef = getElement('.username-edit');
+	const editPasswordRef = getElement('.password-edit');
+	const editEmailRef = getElement('.email-edit');
+	const users = await fetchUsers();
+	const orders = getOrderHistory();
+	console.log(users);
+	setCurrentUser(users.users[0]);
+	if(!users.users[0].profile_image) {
+		profileImgRef.src = '../res/logo_transparent.png';
+	} else {
+		profileImgRef.src = users.users[0].profile_image;
+	}
+	usernameRef.textContent += users.users[0].username;
+	passwordRef.textContent += users.users[0].password;
+	emailRef.textContent += users.users[0].email;
+	renderHistory(orders);
+
+	logOutBtnRef.addEventListener("click", (event) => {
+		logOutUser();
+		window.location.pathname = "index.html";
+	});
+
+	editUsernameRef.addEventListener("click", (event) => {
+		let newUsername = prompt("Please enter your new username", "");
+		if (newUsername != null) {
+		  usernameRef.textContent = `Username: ${newUsername}`;
+		}
+	});
+
+	editPasswordRef.addEventListener("click", (event) => {
+		let newPassword = prompt("Please enter your new password", "");
+		if (newPassword != null) {
+		  passwordRef.textContent = `Password: ${newPassword}`;
+		}
+	});
+
+	editEmailRef.addEventListener("click", (event) => {
+		let newEmail = prompt("Please enter your new email", "");
+		if (newEmail != null) {
+		  emailRef.textContent = `Email: ${newEmail}`;
+		}
+	});
 }
 
 // EVENT LISTENERS
