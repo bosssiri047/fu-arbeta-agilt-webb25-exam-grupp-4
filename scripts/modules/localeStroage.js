@@ -182,3 +182,34 @@ function setUniqueId(orderHistory) {
 
 	return uniqueId;
 }
+
+// LOGIN / REGISTRATION
+
+export function setCurrentUser(user) {
+	const currentUser = {
+		name: user.username,
+		role: user.role,
+		// id later
+	};
+
+	localStorage.setItem("currentUser", JSON.stringify(currentUser));
+}
+
+//Function to help figure out what to show on the site
+export function userLoggedIn() {
+	const currentUser = JSON.parse(localStorage.getItem("currentUser"));
+	if (currentUser) {
+		if (currentUser.role === "admin") {
+			return "admin";
+		} else {
+			return "user";
+		}
+	} else {
+		return "guest";
+	}
+}
+
+//Removes the currentUser localstorage / loggin out
+export function logOut() {
+	localStorage.removeItem("currentUser");
+}

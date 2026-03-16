@@ -1,4 +1,4 @@
-import { fetchProducts } from "./modules/api.js";
+import { fetchProducts, fetchUsers } from "./modules/api.js";
 import {
 	moveBurgerTopLeft,
 	renderCart,
@@ -9,6 +9,7 @@ import {
 	renderMap,
 	closeMap,
 	renderKvitto,
+	renderLogin,
 } from "./modules/gui.js";
 import {
 	addOrderToHistory,
@@ -17,6 +18,8 @@ import {
 	getCart,
 	getOrderById,
 	removeFromCart,
+	setCurrentUser,
+	userLoggedIn,
 } from "./modules/localeStroage.js";
 import {
 	getElement,
@@ -46,6 +49,9 @@ if (
 } else if (window.location.pathname.includes("order.html")) {
 	console.log("order.html");
 	orderSetup();
+} else if (window.location.pathname.includes("login.html")) {
+	console.log("login.html");
+	loginSetup();
 }
 
 function pageSetup() {
@@ -139,6 +145,12 @@ function receiptSetup() {
 	renderKvitto(products);
 }
 
+async function loginSetup() {
+	renderLogin();
+	renderHamburgerMenu();
+	loadLoginEventListeners();
+	console.log(`test ${userLoggedIn()}`);
+}
 // EVENT LISTENERS
 
 // FOODTRUCK PAGE
@@ -216,4 +228,45 @@ function loadOrderEventListeners(orderId) {
 	document.querySelector("#viewReceipt").addEventListener("click", () => {
 		location.href = `./receipt.html?orderId=${orderId}`;
 	});
+}
+
+//LOGIN
+
+async function loadLoginEventListeners() {
+	document
+		.querySelector("#loginBtn")
+		.addEventListener("click", async (event) => {
+			event.preventDefault();
+
+			const userInputRef = document.querySelector("#username");
+			const pwInputRef = document.querySelector("#password");
+			userInputRef.placeholder = "";
+			pwInputRef.placeholder = "";
+
+			const { users: userList } = await fetchUsers();
+			console.log(userList);
+
+			const validUser = userList.find(
+				(user) => user.username === userInputRef.value,
+			);
+
+			if (!validUser) {
+				userInputRef.classList.add("login__input--error");
+				userInputRef.value = "";
+				userInputRef.placeholder = "Användarnamn finns inte";
+				return;
+			} else {
+				userInputRef.classList.remove("login__input--error");
+
+				if (validUser.password !== pwInputRef.value) {
+					pwInputRef.classList.add("login__input--error");
+					pwInputRef.value = "";
+					pwInputRef.placeholder = "Fel lösenord";
+					return;
+				} else {
+					setCurrentUser(validUser);
+					location.href = "./index.html";
+				}
+			}
+		});
 }
