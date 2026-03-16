@@ -186,7 +186,8 @@ a {
     width: 64px;
     height: 64px;
     border-radius: 4px;
-    background-color: var(--ash);
+    /* background-color: var(--ash); */
+    background-color: red;
 
     .header__cart-img {
       width: 75%;
