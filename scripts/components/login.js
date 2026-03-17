@@ -11,7 +11,7 @@ export function createLogin() {
     <main class="login">
         <h1 class="login__title">Logga in</h1>
         <form class="login__form">
-            <label for="username" class="login__label">Anändarnamn</label>
+            <label for="username" class="login__label">Användarnamn</label>
             <input
                 type="text"
                 class="login__input"
@@ -33,7 +33,7 @@ export function createLogin() {
                 Logga in
             </button>
         </form>
-        <button class="login__register-btn">
+        <button class="login__register-btn" id="goToRegister">
             Inget användarkonto? Tryck här för att skapa!
         </button>
     </main>

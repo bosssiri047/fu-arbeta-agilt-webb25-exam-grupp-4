@@ -1,6 +1,7 @@
 // CART
 
-import { fetchProducts } from "./api.js";
+import { getElement } from "../utils/domutils.js";
+import { fetchProducts, fetchUsers } from "./api.js";
 
 //Add a single item to cart by id
 export function addToCart(productId) {
@@ -107,6 +108,14 @@ export function addOrderToHistory(cart, products) {
 		totalPrice: 0,
 	};
 
+	//Adds a userId if logged in
+	const loggedInUser = userLoggedIn();
+	if (loggedInUser !== "guest") {
+		currentOrder.userId = getCurrentUserId();
+	} else {
+		currentOrder.userId = "guest";
+	}
+
 	//pushing in each product in to the products array
 	for (let item of cart) {
 		const productData = products.find(
@@ -143,7 +152,7 @@ export function getOrderById(id) {
 	if (order) {
 		return order;
 	} else {
-		return [];
+		return { error: "No order found by that ID" };
 	}
 }
 
@@ -161,7 +170,8 @@ function getOrderHistory() {
 }
 
 // Randomly generates an id and loops until the generated id is not present in the order history
-function setUniqueId(orderHistory) {
+// Changed some names so that it makes more sense to be used for both order id and user id.
+function setUniqueId(comparisonArray) {
 	let isDone = false;
 	let uniqueId;
 
@@ -173,7 +183,7 @@ function setUniqueId(orderHistory) {
 			uniqueId += randomNumber;
 		}
 
-		const existingId = orderHistory.find((order) => order.id === uniqueId);
+		const existingId = comparisonArray.find((item) => item.id === uniqueId);
 
 		if (!existingId) {
 			isDone = true;
@@ -183,11 +193,10 @@ function setUniqueId(orderHistory) {
 	return uniqueId;
 }
 
-// LOGIN / REGISTRATION
-
+// LOGIN
 export function setCurrentUser(user) {
 	const currentUser = {
-		name: user.username,
+		id: user.id,
 		role: user.role,
 		// id later
 	};
@@ -209,7 +218,67 @@ export function userLoggedIn() {
 	}
 }
 
+export function getCurrentUserId() {
+	const user = JSON.parse(localStorage.getItem("currentUser"));
+	return user.id || null;
+}
+
 //Removes the currentUser localstorage / loggin out
 export function logOut() {
 	localStorage.removeItem("currentUser");
+}
+
+// REGISTRATION
+
+//Helper function to use Jesper's userList API to populate our own localstorage. Use once manually then don't call this function again.
+export async function setStarterUserList() {
+	const { users: userList } = await fetchUsers();
+
+	for (let user of userList) {
+		user.id = setUniqueId(userList);
+	}
+
+	localStorage.setItem("userList", JSON.stringify(userList));
+}
+
+//Fetches the whole user list array
+export function getUserList() {
+	const existingUserList = localStorage.getItem("userList");
+
+	if (existingUserList) {
+		console.log("UserList exist in local storage");
+		return JSON.parse(existingUserList);
+	} else {
+		console.log("userList doesn't exist in local storage");
+		return [];
+	}
+}
+
+//Fetches a user object by ID
+export function getUserById(id) {
+	const userList = getUserList();
+	const user = userList.find((user) => user.id === id);
+
+	if (user) {
+		return user;
+	} else {
+		return { error: "No user found by that ID" };
+	}
+}
+
+//Create a user and push it in to local storage
+export function createUser(username, email, password) {
+	const userList = getUserList();
+	const user = {
+		id: setUniqueId(userList),
+		username: username,
+		email: email,
+		password: password,
+		role: "user",
+		profile_image: "",
+	};
+
+	userList.push(user);
+
+	localStorage.setItem("userList", JSON.stringify(userList));
 }

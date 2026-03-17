@@ -8,6 +8,7 @@ import { createMapOverlay } from "../components/foodtruck.js";
 import { loadMapEventListeners } from "../script.js";
 import { createKvittoItem } from "../components/kvitto.js";
 import { createLogin } from "../components/login.js";
+import { createRegistration } from "../components/registration.js";
 
 export function renderHamburgerMenu() {
 	getElement(".header").innerHTML += createHamburgerMenu();
@@ -129,6 +130,17 @@ export function renderKvitto(products) {
 //LOGIN
 
 export function renderLogin() {
+	clearLoginReg();
 	const bodyRef = document.querySelector("body");
 	bodyRef.innerHTML = createLogin();
+}
+
+export function renderRegistration() {
+	clearLoginReg();
+	const bodyRef = document.querySelector("body");
+	bodyRef.innerHTML = createRegistration();
+}
+
+export function clearLoginReg() {
+	document.querySelector("body").innerHTML = "";
 }
