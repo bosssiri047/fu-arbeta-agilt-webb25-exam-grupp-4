@@ -5,22 +5,40 @@ import {
 	renderCartAlertCount,
 	renderHamburgerMenu,
 	renderProducts,
+	renderLogin,
+	renderRegistration,
 	filterMenu,
 	renderMap,
 	closeMap,
 	renderKvitto,
 	renderHistory,
+	renderProfile,
+	editUserName,
+	editPassword,
+	editEmail,
+	renderOrderHistory,
+	editImage,
 } from "./modules/gui.js";
 import {
 	addOrderToHistory,
 	addToCart,
 	emptyCart,
+	createUser,
 	getCart,
+	getCurrentUserId,
+	// getCurrentUser,
 	getOrderById,
 	getOrderHistory,
-	logOutUser,
+	getUserList,
+	logOut,
 	removeFromCart,
 	setCurrentUser,
+	setStarterUserList,
+	userLoggedIn,
+	editLocaleUserName,
+	editLocalePassword,
+	editLocaleEmail,
+	editLocaleImage,
 } from "./modules/localeStroage.js";
 import {
 	getElement,
@@ -50,10 +68,16 @@ if (
 } else if (window.location.pathname.includes("order.html")) {
 	console.log("order.html");
 	orderSetup();
+} else if (window.location.pathname.includes("login.html")) {
+	console.log("login.html");
+	loginSetup();
 } else if (window.location.pathname.includes("profile.html")) {
 	console.log("profile.html");
 	profileSetup();
 }
+
+//Set starter users
+// setStarterUserList();
 
 function pageSetup() {
 	renderHamburgerMenu();
@@ -146,55 +170,92 @@ function receiptSetup() {
 	renderKvitto(products);
 }
 
+async function loginSetup() {
+	renderLogin();
+	renderHamburgerMenu();
+	loadLoginEventListeners();
+	console.log(`test ${userLoggedIn()}`);
+	const users = await fetchUsers();
+	console.log(users);
+}
+
 async function profileSetup() {
 	renderHamburgerMenu();
 	const logOutBtnRef = getElement('.logoutBtn');
-	const profileImgRef = getElement('.profile-img');
-	const usernameRef = getElement('.profile-username');
-	const passwordRef = getElement('.profile-password');
-	const emailRef = getElement('.profile-email');
-	const editUsernameRef = getElement('.username-edit');
-	const editPasswordRef = getElement('.password-edit');
-	const editEmailRef = getElement('.email-edit');
-	const users = await fetchUsers();
-	const orders = getOrderHistory();
+	const editImgRef = getElement('.profile-img');
+	const editUsernameRef = getElement('.usernameBtn-edit');
+	const editPasswordRef = getElement('.passwordBtn-edit');
+	const editEmailRef = getElement('.emailBtn-edit');
+	const currentUser = getCurrentUserId();
+	const users = getUserList();
 	console.log(users);
-	setCurrentUser(users.users[0]);
-	if(!users.users[0].profile_image) {
-		profileImgRef.src = '../res/logo_transparent.png';
-	} else {
-		profileImgRef.src = users.users[0].profile_image;
-	}
-	usernameRef.textContent += users.users[0].username;
-	passwordRef.textContent += users.users[0].password;
-	emailRef.textContent += users.users[0].email;
-	renderHistory(orders);
+	console.log(currentUser);
+	const orders = getOrderHistory();
+	//Finding the current login user by filtering through Jesper's API users with currentUser's name in localeStorage
+	const theUser = users.find(
+		(user) => user.id === currentUser
+	);
+	console.log(theUser);
 
+	//Render profile informations
+	renderProfile(theUser);
+	
+	//Order history render
+	if (theUser.role === 'admin') {
+		renderHistory(orders);
+	} else {
+		const theUserHistory = [];
+		for (let order of orders) {
+			if(order.userId === theUser.id) {
+				theUserHistory.push(order);
+			}
+		}
+		renderHistory(theUserHistory);
+	}
+	
+
+	//Logout listener button
 	logOutBtnRef.addEventListener("click", (event) => {
-		logOutUser();
+		logOut();
 		window.location.pathname = "index.html";
 	});
 
+	//Edit buttons
+	editImgRef.addEventListener("click", (event) => {
+		editImage();
+		editLocaleImage(users, currentUser);
+	});
+	
 	editUsernameRef.addEventListener("click", (event) => {
-		let newUsername = prompt("Please enter your new username", "");
-		if (newUsername != null) {
-		  usernameRef.textContent = `Username: ${newUsername}`;
-		}
+		editUserName();
+		editLocaleUserName(users, currentUser);
 	});
 
 	editPasswordRef.addEventListener("click", (event) => {
-		let newPassword = prompt("Please enter your new password", "");
-		if (newPassword != null) {
-		  passwordRef.textContent = `Password: ${newPassword}`;
-		}
+		editPassword();
+		editLocalePassword(users, currentUser);
 	});
 
 	editEmailRef.addEventListener("click", (event) => {
-		let newEmail = prompt("Please enter your new email", "");
-		if (newEmail != null) {
-		  emailRef.textContent = `Email: ${newEmail}`;
-		}
+		editEmail();
+		editLocaleEmail(users, currentUser);
 	});
+
+	//Order history listener
+	const historyItemsRef = getElementAll('.history__list-item');
+	historyItemsRef.forEach(item => {
+		item.addEventListener("click", (event) => {
+			const order = getOrderById(event.target.textContent.slice(1));
+			console.log(order);
+			renderOrderHistory(order);
+		})
+	});
+
+	//Pop up closer listener
+	const closerRef = getElement('.closer');
+	closerRef.addEventListener('click', (event) => {
+		addClass(closerRef, "d-none");
+	})
 }
 
 // EVENT LISTENERS
@@ -273,5 +334,132 @@ function loadCartEventListeners(products) {
 function loadOrderEventListeners(orderId) {
 	document.querySelector("#viewReceipt").addEventListener("click", () => {
 		location.href = `./receipt.html?orderId=${orderId}`;
+	});
+}
+
+//LOGIN
+
+async function loadLoginEventListeners() {
+	document
+		.querySelector("#loginBtn")
+		.addEventListener("click", async (event) => {
+			event.preventDefault();
+
+			const userInputRef = document.querySelector("#username");
+			const pwInputRef = document.querySelector("#password");
+			userInputRef.placeholder = "";
+			pwInputRef.placeholder = "";
+
+			const userList = getUserList();
+			console.log(userList);
+
+			const validUser = userList.find(
+				(user) => user.username === userInputRef.value,
+			);
+
+			if (!validUser) {
+				userInputRef.classList.add("login__input--error");
+				userInputRef.value = "";
+				userInputRef.placeholder = "Användarnamn finns inte";
+				return;
+			} else {
+				userInputRef.classList.remove("login__input--error");
+
+				if (validUser.password !== pwInputRef.value) {
+					pwInputRef.classList.add("login__input--error");
+					pwInputRef.value = "";
+					pwInputRef.placeholder = "Fel lösenord";
+					return;
+				} else {
+					setCurrentUser(validUser);
+					location.href = "./index.html";
+				}
+			}
+		});
+
+		document
+		.querySelector("#goToRegister")
+		.addEventListener("click", (event) => {
+			event.preventDefault();
+
+			renderRegistration();
+			renderHamburgerMenu();
+			loadRegistrationEventListeners();
+		});
+}
+
+//REGISTRATION
+
+function loadRegistrationEventListeners() {
+	document
+		.querySelector("#registerBtn")
+		.addEventListener("click", (event) => {
+			event.preventDefault();
+
+			const userList = getUserList();
+			const usernameInputRef = document.querySelector("#username");
+			const emailInputRef = document.querySelector("#email");
+			const pwInputRef = document.querySelector("#password");
+
+			usernameInputRef.classList.remove("login__input--error");
+			usernameInputRef.placeholder = "";
+			emailInputRef.classList.remove("login__input--error");
+			emailInputRef.placeholder = "";
+			pwInputRef.classList.remove("login__input--error");
+			pwInputRef.placeholder = "";
+
+			if (
+				!userList.find(
+					(user) =>
+						user.username ===
+						usernameInputRef.value.trim().toLowerCase(),
+				)
+			) {
+				if (usernameInputRef.value.length !== 0) {
+					if (
+						!userList.find(
+							(user) =>
+								user.email ===
+								emailInputRef.value.trim().toLowerCase(),
+						)
+					) {
+						if (pwInputRef.value.length >= 8) {
+							createUser(
+								usernameInputRef.value.trim().toLowerCase(),
+								emailInputRef.value.trim().toLowerCase(),
+								pwInputRef.value,
+							);
+							location.href = "./login.html";
+						} else {
+							pwInputRef.classList.add("login__input--error");
+							pwInputRef.value = "";
+							pwInputRef.placeholder =
+								"Lösenordet måste vara minst 8 karaktärer långt";
+						}
+					} else {
+						emailInputRef.classList.add("login__input--error");
+						emailInputRef.value = "";
+						emailInputRef.placeholder =
+							"Email adressen används redan, vänligen välj en ny";
+					}
+				} else {
+					usernameInputRef.classList.add("login__input--error");
+					usernameInputRef.value = "";
+					usernameInputRef.placeholder = "Namnet får inte vara tomt";
+				}
+			} else {
+				usernameInputRef.classList.add("login__input--error");
+				usernameInputRef.value = "";
+				usernameInputRef.placeholder =
+					"Namnet används redan, vänligen välj ett nytt";
+			}
+		});
+
+	document.querySelector("#goToLogin").addEventListener("click", (event) => {
+		event.preventDefault();
+
+		renderLogin();
+		renderHamburgerMenu();
+		loadLoginEventListeners();
 	});
 }

@@ -4,6 +4,12 @@ export async function fetchProducts() {
 }
 
 export async function fetchUsers() {
-    const response = await fetch('https://santosnr6.github.io/Data/yumyumusers.json');
-    return await response.json();
+	try {
+		const response = await fetch(
+			"https://santosnr6.github.io/Data/yumyumusers.json",
+		);
+		return await response.json();
+	} catch (error) {
+		console.error(error.message);
+	}
 }

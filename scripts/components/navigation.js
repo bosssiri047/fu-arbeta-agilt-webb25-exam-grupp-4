@@ -1,12 +1,13 @@
 import { userLoggedIn } from "../modules/localeStroage.js";
 
-export function createHamburgerMenu () {
-    console.log(userLoggedIn());
-    const loginProfile = userLoggedIn() === "guest" ? 
-    `<a href="./login.html" class="nav-bar__link">Logga In</a>`
-    : `<a href="./profile.html" class="nav-bar__link">Min Profil</a>` ;
+export function createHamburgerMenu() {
+	console.log(userLoggedIn());
+	const loginProfile =
+		userLoggedIn() === "guest"
+			? `<a href="./login.html" class="nav-bar__link">Logga In</a>`
+			: `<a href="./profile.html" class="nav-bar__link">Min Profil</a>`;
 
-    return `
+	return `
         <input type="checkbox" class="header__burger" id="burger"/>
         <label for="burger" class="header__burger-label" aria-label="hamburger-menu">
             <span class="header__burger-btn"></span>

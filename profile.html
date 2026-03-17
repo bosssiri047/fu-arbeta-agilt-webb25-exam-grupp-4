@@ -20,20 +20,36 @@
 		</header>
 		<main class="profile-main">
             <section class="profile-wrapper">
-                <img src="" alt="profileImg" class="profile-img">
+                <img src="" onerror="this.src='./res/logo_transparent.png'" alt="Invalid Image" class="profile-img">
                 <section class="profile__group-username">
                     <h3 class="profile-username">Username: </h3>
-                    <button type="button" class="username-edit">Edit</button>
+                    <button type="button" class="usernameBtn-edit">Edit</button>
                 </section>
                 <section class="profile__group-password">
                     <h3 class="profile-password">Password: </h3>
-                    <button type="button" class="password-edit">Edit</button>
+                    <button type="button" class="passwordBtn-edit">Edit</button>
                 </section>
                 <section class="profile__group-email">
                     <h3 class="profile-email">Email: </h3>
-                    <button type="button" class="email-edit">Edit</button>
+                    <button type="button" class="emailBtn-edit">Edit</button>
                 </section>
             </section>
+            <div class="closer d-none">
+                <article class="order-wrapper">
+                    <h2 class="order__title">Kvitto</h2>
+                    <h2 class="order__id">#</h2>
+			        <ul class="order__list" id="orderList">
+                    
+			        </ul>
+                    <div class="order__total-group">
+			        	<h2 class="order__title">Total</h2>
+			        	<span
+			        		class="order__total-price"
+			        		id="orderTotalPrice"
+			        	></span>
+			        </div>
+                </article>
+            </div>
 		</main>
         <footer class="profile-footer">
             <section class="history-wrapper">

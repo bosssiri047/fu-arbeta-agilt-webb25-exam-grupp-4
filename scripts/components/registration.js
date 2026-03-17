@@ -1,14 +1,6 @@
-<!doctype html>
-<html lang="en">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<script src="./scripts/script.js" type="module" defer></script>
-		<link rel="stylesheet" href="./styles/style.css" />
-		<title>Logga in</title>
-	</head>
-	<body class="login-body">
-		<!-- <header class="header login-header">
+export function createRegistration() {
+	return `
+    <header class="header login-header">
 			<img
 				src="./res/logo.png"
 				alt="YumYum logotyp"
@@ -18,7 +10,7 @@
 		<main class="login">
 			<h1 class="login__title">Registration</h1>
 			<form class="login__form">
-				<label for="username" class="login__label">Anändarnamn</label>
+				<label for="username" class="login__label">Användarnamn</label>
 				<input
 					type="text"
 					class="login__input"
@@ -52,6 +44,6 @@
 			<button class="login__register-btn" id="goToLogin">
 				Tillbaka till logga in
 			</button>
-		</main> -->
-	</body>
-</html>
+		</main>
+    `;
+}
