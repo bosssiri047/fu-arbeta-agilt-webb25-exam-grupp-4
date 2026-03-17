@@ -219,3 +219,40 @@ function loadOrderEventListeners(orderId) {
     location.href = `./receipt.html?orderId=${orderId}`;
   });
 }
+
+// CART UPDATEPREVEW
+// Hämta nuvarande korg
+// Returerna updaterad korg
+async function updateCartPreviewContent() {}
+
+// CART PREVIEW
+function setUpCartPreview() {
+  let cartLink = document.querySelector(".header__cart-link");
+  let preview = document.querySelector("#cartPreview");
+
+  console.log("cartlink:", cartLink);
+  console.log("preview", preview);
+
+  // if kolla efter cart
+  if (!cartLink) {
+    console.log("Länken hittades inte");
+    return;
+  }
+  if (!preview) {
+    console.log("Previw hittades inte");
+    return;
+  }
+
+  //lägg till hover effeckt när vi drar musen över varukorgen
+  cartLink.addEventListener("mouseenter", () => {
+    console.log("Hovrar över varukorgen, med musen");
+    preview.classList.add("show");
+  });
+
+  // när vi inte hovrar på varukorgen
+  cartLink.addEventListener("mouseleave", () => {
+    console.log("Musen hovrar inte över varukorgen");
+    preview.classList.remove("show");
+  });
+}
+setUpCartPreview();

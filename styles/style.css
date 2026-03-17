@@ -186,8 +186,7 @@ a {
     width: 64px;
     height: 64px;
     border-radius: 4px;
-    /* background-color: var(--ash); */
-    background-color: red;
+    background-color: var(--ash);
 
     .header__cart-img {
       width: 75%;
@@ -747,5 +746,29 @@ a {
 
   .aboutheader {
     padding: 1.5rem;
+  }
+}
+
+.cartpreview {
+  position: absolute;
+  /* Läggs direkt under ikonen */
+  top: 100%;
+  right: 0;
+  width: 320px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  z-index: 1000;
+  background-color: blue;
+  color: red;
+  /* Visa/göm vid hover */
+  display: none;
+
+  .cartpreview.show {
+    display: block;
+  }
+
+  .cartpreview:hover {
+    display: block;
   }
 }
