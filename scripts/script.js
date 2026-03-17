@@ -18,10 +18,13 @@ import {
 	editEmail,
 	renderOrderHistory,
 	editImage,
+	renderLogin,
+	renderRegistration,
 } from "./modules/gui.js";
 import {
 	addOrderToHistory,
 	addToCart,
+	createUser,
 	emptyCart,
 	createUser,
 	getCart,
@@ -175,8 +178,6 @@ async function loginSetup() {
 	renderHamburgerMenu();
 	loadLoginEventListeners();
 	console.log(`test ${userLoggedIn()}`);
-	const users = await fetchUsers();
-	console.log(users);
 }
 
 async function profileSetup() {
@@ -377,7 +378,7 @@ async function loadLoginEventListeners() {
 			}
 		});
 
-		document
+	document
 		.querySelector("#goToRegister")
 		.addEventListener("click", (event) => {
 			event.preventDefault();
