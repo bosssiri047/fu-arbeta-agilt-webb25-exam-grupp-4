@@ -2,6 +2,7 @@
 
 import { getElement } from "../utils/domutils.js";
 import { fetchProducts, fetchUsers } from "./api.js";
+import { editUserName } from "./gui.js";
 
 //Add a single item to cart by id
 export function addToCart(productId) {
@@ -157,7 +158,7 @@ export function getOrderById(id) {
 }
 
 // Fetches the oder history if it exists or returns an empty array
-function getOrderHistory() {
+export function getOrderHistory() {
 	const existingHistory = localStorage.getItem("orderHistory");
 
 	if (existingHistory) {
@@ -281,4 +282,37 @@ export function createUser(username, email, password) {
 	userList.push(user);
 
 	localStorage.setItem("userList", JSON.stringify(userList));
+}
+
+//Profile Edits
+export function editLocaleImage(users, currentUser) {
+	let updatedUserList = users;
+	const editedImg = getElement('.profile-img').src;
+	const profileRef = updatedUserList.find((user) => user.id === currentUser);
+	profileRef.profile_image = editedImg;
+	localStorage.setItem("userList", JSON.stringify(updatedUserList));
+}
+
+export function editLocaleUserName(users, currentUser) {
+	let updatedUserList = users;
+	const editedUserName = getElement('.profile-username').textContent.slice(10);
+	const profileRef = updatedUserList.find((user) => user.id === currentUser);
+	profileRef.username = editedUserName;
+	localStorage.setItem("userList", JSON.stringify(updatedUserList));
+}
+
+export function editLocalePassword(users, currentUser) {
+	let updatedUserList = users;
+	const editedPassword = getElement('.profile-password').textContent.slice(10);
+	const profileRef = updatedUserList.find((user) => user.id === currentUser);
+	profileRef.password = editedPassword;
+	localStorage.setItem("userList", JSON.stringify(updatedUserList));
+}
+
+export function editLocaleEmail(users, currentUser) {
+	let updatedUserList = users;
+	const editedEmail = getElement('.profile-email').textContent.slice(7);
+	const profileRef = updatedUserList.find((user) => user.id === currentUser);
+	profileRef.email = editedEmail;
+	localStorage.setItem("userList", JSON.stringify(updatedUserList));
 }

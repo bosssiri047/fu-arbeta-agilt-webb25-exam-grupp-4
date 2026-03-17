@@ -5,10 +5,19 @@ import {
 	renderCartAlertCount,
 	renderHamburgerMenu,
 	renderProducts,
+	renderLogin,
+	renderRegistration,
 	filterMenu,
 	renderMap,
 	closeMap,
 	renderKvitto,
+	renderHistory,
+	renderProfile,
+	editUserName,
+	editPassword,
+	editEmail,
+	renderOrderHistory,
+	editImage,
 	renderLogin,
 	renderRegistration,
 } from "./modules/gui.js";
@@ -17,13 +26,22 @@ import {
 	addToCart,
 	createUser,
 	emptyCart,
+	createUser,
 	getCart,
+	getCurrentUserId,
+	// getCurrentUser,
 	getOrderById,
+	getOrderHistory,
 	getUserList,
+	logOut,
 	removeFromCart,
 	setCurrentUser,
 	setStarterUserList,
 	userLoggedIn,
+	editLocaleUserName,
+	editLocalePassword,
+	editLocaleEmail,
+	editLocaleImage,
 } from "./modules/localeStroage.js";
 import {
 	getElement,
@@ -56,7 +74,13 @@ if (
 } else if (window.location.pathname.includes("login.html")) {
 	console.log("login.html");
 	loginSetup();
+} else if (window.location.pathname.includes("profile.html")) {
+	console.log("profile.html");
+	profileSetup();
 }
+
+//Set starter users
+// setStarterUserList();
 
 function pageSetup() {
 	renderHamburgerMenu();
@@ -154,6 +178,85 @@ async function loginSetup() {
 	renderHamburgerMenu();
 	loadLoginEventListeners();
 	console.log(`test ${userLoggedIn()}`);
+}
+
+async function profileSetup() {
+	renderHamburgerMenu();
+	const logOutBtnRef = getElement('.logoutBtn');
+	const editImgRef = getElement('.profile-img');
+	const editUsernameRef = getElement('.usernameBtn-edit');
+	const editPasswordRef = getElement('.passwordBtn-edit');
+	const editEmailRef = getElement('.emailBtn-edit');
+	const currentUser = getCurrentUserId();
+	const users = getUserList();
+	console.log(users);
+	console.log(currentUser);
+	const orders = getOrderHistory();
+	//Finding the current login user by filtering through Jesper's API users with currentUser's name in localeStorage
+	const theUser = users.find(
+		(user) => user.id === currentUser
+	);
+	console.log(theUser);
+
+	//Render profile informations
+	renderProfile(theUser);
+	
+	//Order history render
+	if (theUser.role === 'admin') {
+		renderHistory(orders);
+	} else {
+		const theUserHistory = [];
+		for (let order of orders) {
+			if(order.userId === theUser.id) {
+				theUserHistory.push(order);
+			}
+		}
+		renderHistory(theUserHistory);
+	}
+	
+
+	//Logout listener button
+	logOutBtnRef.addEventListener("click", (event) => {
+		logOut();
+		window.location.pathname = "index.html";
+	});
+
+	//Edit buttons
+	editImgRef.addEventListener("click", (event) => {
+		editImage();
+		editLocaleImage(users, currentUser);
+	});
+	
+	editUsernameRef.addEventListener("click", (event) => {
+		editUserName();
+		editLocaleUserName(users, currentUser);
+	});
+
+	editPasswordRef.addEventListener("click", (event) => {
+		editPassword();
+		editLocalePassword(users, currentUser);
+	});
+
+	editEmailRef.addEventListener("click", (event) => {
+		editEmail();
+		editLocaleEmail(users, currentUser);
+	});
+
+	//Order history listener
+	const historyItemsRef = getElementAll('.history__list-item');
+	historyItemsRef.forEach(item => {
+		item.addEventListener("click", (event) => {
+			const order = getOrderById(event.target.textContent.slice(1));
+			console.log(order);
+			renderOrderHistory(order);
+		})
+	});
+
+	//Pop up closer listener
+	const closerRef = getElement('.closer');
+	closerRef.addEventListener('click', (event) => {
+		addClass(closerRef, "d-none");
+	})
 }
 
 // EVENT LISTENERS
