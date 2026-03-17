@@ -18,18 +18,14 @@ import {
 	editEmail,
 	renderOrderHistory,
 	editImage,
-	renderLogin,
-	renderRegistration,
 } from "./modules/gui.js";
 import {
 	addOrderToHistory,
 	addToCart,
 	createUser,
 	emptyCart,
-	createUser,
 	getCart,
 	getCurrentUserId,
-	// getCurrentUser,
 	getOrderById,
 	getOrderHistory,
 	getUserList,
