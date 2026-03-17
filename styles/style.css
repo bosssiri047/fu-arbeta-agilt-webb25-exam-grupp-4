@@ -769,6 +769,7 @@ a {
 
 	.login-header__logo {
 		margin: 2rem 0;
+		width: 100px;
 	}
 }
 
@@ -804,12 +805,17 @@ a {
 		.login__input {
 			color: var(--coal);
 			padding: 0.5rem;
-			font-size: 1.15rem;
+			font-size: 1rem;
 			border: 1px solid black;
 			border-radius: 4px;
 		}
 
 		.login__input--error {
+			border: 1px solid red;
+		}
+
+		.login__input--error:invalid {
+			outline: 1px solid red;
 			border: 1px solid red;
 		}
 

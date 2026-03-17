@@ -10,15 +10,19 @@ import {
 	closeMap,
 	renderKvitto,
 	renderLogin,
+	renderRegistration,
 } from "./modules/gui.js";
 import {
 	addOrderToHistory,
 	addToCart,
+	createUser,
 	emptyCart,
 	getCart,
 	getOrderById,
+	getUserList,
 	removeFromCart,
 	setCurrentUser,
+	setStarterUserList,
 	userLoggedIn,
 } from "./modules/localeStroage.js";
 import {
@@ -151,6 +155,7 @@ async function loginSetup() {
 	loadLoginEventListeners();
 	console.log(`test ${userLoggedIn()}`);
 }
+
 // EVENT LISTENERS
 
 // FOODTRUCK PAGE
@@ -243,7 +248,7 @@ async function loadLoginEventListeners() {
 			userInputRef.placeholder = "";
 			pwInputRef.placeholder = "";
 
-			const { users: userList } = await fetchUsers();
+			const userList = getUserList();
 			console.log(userList);
 
 			const validUser = userList.find(
@@ -269,4 +274,90 @@ async function loadLoginEventListeners() {
 				}
 			}
 		});
+
+	document
+		.querySelector("#goToRegister")
+		.addEventListener("click", (event) => {
+			event.preventDefault();
+
+			renderRegistration();
+			renderHamburgerMenu();
+			loadRegistrationEventListeners();
+		});
+}
+
+//REGISTRATION
+
+function loadRegistrationEventListeners() {
+	document
+		.querySelector("#registerBtn")
+		.addEventListener("click", (event) => {
+			event.preventDefault();
+
+			const userList = getUserList();
+			const usernameInputRef = document.querySelector("#username");
+			const emailInputRef = document.querySelector("#email");
+			const pwInputRef = document.querySelector("#password");
+
+			usernameInputRef.classList.remove("login__input--error");
+			usernameInputRef.placeholder = "";
+			emailInputRef.classList.remove("login__input--error");
+			emailInputRef.placeholder = "";
+			pwInputRef.classList.remove("login__input--error");
+			pwInputRef.placeholder = "";
+
+			if (
+				!userList.find(
+					(user) =>
+						user.username ===
+						usernameInputRef.value.trim().toLowerCase(),
+				)
+			) {
+				if (usernameInputRef.value.length !== 0) {
+					if (
+						!userList.find(
+							(user) =>
+								user.email ===
+								emailInputRef.value.trim().toLowerCase(),
+						)
+					) {
+						if (pwInputRef.value.length >= 8) {
+							createUser(
+								usernameInputRef.value.trim().toLowerCase(),
+								emailInputRef.value.trim().toLowerCase(),
+								pwInputRef.value,
+							);
+							location.href = "./login.html";
+						} else {
+							pwInputRef.classList.add("login__input--error");
+							pwInputRef.value = "";
+							pwInputRef.placeholder =
+								"Lösenordet måste vara minst 8 karaktärer långt";
+						}
+					} else {
+						emailInputRef.classList.add("login__input--error");
+						emailInputRef.value = "";
+						emailInputRef.placeholder =
+							"Email adressen används redan, vänligen välj en ny";
+					}
+				} else {
+					usernameInputRef.classList.add("login__input--error");
+					usernameInputRef.value = "";
+					usernameInputRef.placeholder = "Namnet får inte vara tomt";
+				}
+			} else {
+				usernameInputRef.classList.add("login__input--error");
+				usernameInputRef.value = "";
+				usernameInputRef.placeholder =
+					"Namnet används redan, vänligen välj ett nytt";
+			}
+		});
+
+	document.querySelector("#goToLogin").addEventListener("click", (event) => {
+		event.preventDefault();
+
+		renderLogin();
+		renderHamburgerMenu();
+		loadLoginEventListeners();
+	});
 }
