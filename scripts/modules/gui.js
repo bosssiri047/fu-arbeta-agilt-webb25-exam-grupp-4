@@ -1,12 +1,13 @@
 import { createCartItem } from "../components/cart.js";
 import { createHamburgerMenu } from "../components/navigation.js";
 import { createProduct } from "../components/product.js";
-import { getElement, getElementAll } from "../utils/domutils.js";
+import { getElement, getElementAll, removeClass } from "../utils/domutils.js";
 import { getCart, addToCart, getCartCount } from "../modules/localeStroage.js";
 import { fetchProducts } from "./api.js";
 import { createMapOverlay } from "../components/foodtruck.js";
 import { loadMapEventListeners } from "../script.js";
 import { createKvittoItem } from "../components/kvitto.js";
+import { createOrderHistory, createOrderHistoryListItem } from "../components/history.js";
 import { createLogin } from "../components/login.js";
 import { createRegistration } from "../components/registration.js";
 import { createCartoverlay } from "../components/cartOverlay.js";
@@ -129,12 +130,10 @@ export function renderKvitto(products) {
 		ulRef.innerHTML += createKvittoItem(item);
 	}
 
-	document.querySelector("#receiptTotalPrice").textContent =
-		`${products.totalPrice} SEK`;
+	document.querySelector("#receiptTotalPrice").textContent = `${products.totalPrice} SEK`;
 }
 
 //LOGIN
-
 export function renderLogin() {
 	clearLoginReg();
 	const bodyRef = document.querySelector("body");
@@ -149,4 +148,79 @@ export function renderRegistration() {
 
 export function clearLoginReg() {
 	document.querySelector("body").innerHTML = "";
+}
+
+//Profile Page
+export function renderProfile(theUser) {
+	const profileImgRef = getElement('.profile-img');
+	const usernameRef = getElement('.profile-username');
+	const passwordRef = getElement('.profile-password');
+	const emailRef = getElement('.profile-email');
+	//Render out the correct information according to theUser
+	if(!theUser.profile_image) {
+		profileImgRef.src = '../res/logo_transparent.png';
+	} else {
+		profileImgRef.src = theUser.profile_image;
+	}
+	
+	usernameRef.textContent += theUser.username;
+	passwordRef.textContent += theUser.password;
+	emailRef.textContent += theUser.email;
+}
+
+export function editImage() {
+	const imgRef = getElement('.profile-img');
+	let newImg = prompt("Please enter image link", "");
+	if(newImg != null) {
+		imgRef.src = newImg;
+	}
+}
+
+export function editUserName() {
+	const usernameRef = getElement('.profile-username');
+	let newUsername = prompt("Please enter your new username", "");
+	if (newUsername != null) {
+		usernameRef.textContent = `Username: ${newUsername}`;
+	}
+}
+
+export function editPassword() {
+	const passwordRef = getElement('.profile-password');
+	let newPassword = prompt("Please enter your new password", "");
+	if (newPassword != null && newPassword.length >= 8) {
+		passwordRef.textContent = `Password: ${newPassword}`;
+	} else {
+		newPassword = prompt("The length must be longer than 8", "");
+	}
+}
+
+export function editEmail() {
+	const emailRef = getElement('.profile-email');
+	let newEmail = prompt("Please enter your new email", "");
+	if (newEmail != null) {
+	  emailRef.textContent = `Email: ${newEmail}`;
+	}
+}
+
+export function renderHistory(orders) {
+	const uiRef = getElement("#historyList");
+	uiRef.innerHTML = "";
+
+	for (let order of orders) {
+		uiRef.innerHTML += createOrderHistory(order);
+	}
+}
+
+export function renderOrderHistory(order) {
+	const uiRef = getElement("#orderList");
+	uiRef.innerHTML = "";
+
+	for (let product of order.products) {
+		uiRef.innerHTML += createOrderHistoryListItem(product);
+	}
+	getElement(".order__id").textContent = `#${order.id}`;
+	getElement("#orderTotalPrice").textContent = `${order.totalPrice} SEK`;
+
+	const closerRef = getElement(".closer");
+	removeClass(closerRef, "d-none");
 }
