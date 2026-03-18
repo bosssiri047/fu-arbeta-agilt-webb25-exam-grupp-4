@@ -11,6 +11,7 @@ import {
 	renderKvitto,
 	renderLogin,
 	renderRegistration,
+	renderCartOverlay,
 } from "./modules/gui.js";
 import {
 	addOrderToHistory,
@@ -217,13 +218,29 @@ function loadCartEventListeners(products) {
 		const cart = getCart();
 
 		if (cart) {
-			const orderId = addOrderToHistory(cart, products);
-			// console.log(orderId);
-			emptyCart();
-			document.querySelector("#cartList").innerHTML = "";
-			// console.log(getOrderById(orderId));
-			location.href = `./order.html?orderId=${orderId}`;
+			if (userLoggedIn() === "guest") {
+				renderCartOverlay();
+				loadCartOverlayEventListeners(cart, products);
+			} else {
+				const orderId = addOrderToHistory(cart, products);
+				emptyCart();
+				document.querySelector("#cartList").innerHTML = "";
+				location.href = `./order.html?orderId=${orderId}`;
+			}
 		}
+	});
+}
+
+function loadCartOverlayEventListeners(cart, products) {
+	document.querySelector("#cartLoginBtn").addEventListener("click", () => {
+		location.href = "./login.html";
+	});
+
+	document.querySelector("#cartContinueBtn").addEventListener("click", () => {
+		const orderId = addOrderToHistory(cart, products);
+		emptyCart();
+		document.querySelector("#cartList").innerHTML = "";
+		location.href = `./order.html?orderId=${orderId}`;
 	});
 }
 
