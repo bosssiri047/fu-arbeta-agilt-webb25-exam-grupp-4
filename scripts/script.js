@@ -55,11 +55,15 @@ if (
 function pageSetup() {
   renderHamburgerMenu();
   renderCartAlertCount();
+  // vicent lagt till
+  loadCartPreviewListeners();
 }
 function foodtruckSetup() {
   renderHamburgerMenu();
   loadFoodtruckEventListeners();
   renderCartAlertCount();
+  // vincent lagt till
+  loadCartPreviewListeners();
 }
 
 async function menuSetup() {
@@ -68,9 +72,23 @@ async function menuSetup() {
   console.log(products);
   renderProducts(products);
   renderCartAlertCount();
+  // Vincent lagt till
+  loadCartPreviewListeners();
 
   const menuRef = getElementAll(".menu__list-item");
   console.log(menuRef);
+
+  // preview vincent start
+  for (let list of menuRef) {
+    list.addEventListener("click", (event) => {
+      addToCart(list.id);
+      renderCartAlertCount();
+      // uppdatera preview när någon lägger till
+      updateCartPreviewContent();
+      console.log("preview menu", updateCartPreviewContent);
+    });
+  }
+  // vincent preview end
 
   const wontonFilterRef = getElement("#filter__wonton");
   const dipFilterRef = getElement("#filter__dip");
@@ -271,11 +289,53 @@ function setUpCartPreview() {
     return;
   }
 
-  preview.classList.add("show");
+  // Uppdatera innehåll direkt
+  updateCartPreviewContent();
+
+  // HOVER för desktop
+  cartLink.addEventListener("mouseenter", () => {
+    if (window.innerWidth > 768) {
+      updateCartPreviewContent();
+      preview.classList.add("show");
+    }
+  });
+
+  cartLink.addEventListener("mouseleave", () => {
+    if (window.innerWidth > 768) {
+      preview.classList.remove("show");
+    }
+  });
+
+  // KLICK för mobil
+  cartLink.addEventListener("click", (event) => {
+    if (window.innerWidth <= 768) {
+      event.preventDefault();
+      updateCartPreviewContent();
+      preview.classList.add("show");
+    }
+  });
+
+  // Stäng vid klick utanför (mobil)
+  document.addEventListener("click", (event) => {
+    if (window.innerWidth <= 768) {
+      if (!cartLink.contains(e.target) && !preview.contains(e.target)) {
+        preview.classList.remove("show");
+      }
+    }
+  });
+
+  // Hindra stängning vid klick inuti preview
+  preview.addEventListener("click", (event) => {
+    event.stopPropagation();
+  });
+
+  // gör så att det syns direkt (finns för att testa)
+  // preview.classList.add("show");
 
   //lägg till hover effeckt när vi drar musen över varukorgen
   cartLink.addEventListener("mouseenter", () => {
     console.log("Hovrar över varukorgen, med musen");
+    updateCartPreviewContent();
     preview.classList.add("show");
   });
 
@@ -287,4 +347,5 @@ function setUpCartPreview() {
 }
 
 setUpCartPreview();
-updateCartPreviewContent();
+// updateCartPreviewContent();
+// loadCartPreviewListeners();
