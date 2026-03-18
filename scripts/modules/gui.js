@@ -11,6 +11,7 @@ import { createOrderHistory, createOrderHistoryListItem } from "../components/hi
 import { createLogin } from "../components/login.js";
 import { createRegistration } from "../components/registration.js";
 import { checkImageExists, checkRepeat } from "../utils/utils.js";
+import { createCartoverlay } from "../components/cartOverlay.js";
 
 export function renderHamburgerMenu() {
 	getElement(".header").innerHTML += createHamburgerMenu();
@@ -99,6 +100,11 @@ export function renderCartAlertCount() {
 		alertCountRef.classList.add("d-none");
 		alertCountRef.textContent = "";
 	}
+}
+
+export function renderCartOverlay() {
+	document.querySelector("body").innerHTML += createCartoverlay();
+	console.log("cartOverlay");
 }
 
 //FOODTRUCK
