@@ -18,6 +18,7 @@ import {
 	editEmail,
 	renderOrderHistory,
 	editImage,
+	renderCartOverlay,
 } from "./modules/gui.js";
 import {
 	addOrderToHistory,
@@ -178,38 +179,35 @@ async function loginSetup() {
 
 async function profileSetup() {
 	renderHamburgerMenu();
-	const logOutBtnRef = getElement('.logoutBtn');
-	const editImgRef = getElement('.profile-img');
-	const editUsernameRef = getElement('.usernameBtn-edit');
-	const editPasswordRef = getElement('.passwordBtn-edit');
-	const editEmailRef = getElement('.emailBtn-edit');
+	const logOutBtnRef = getElement(".logoutBtn");
+	const editImgRef = getElement(".profile-img");
+	const editUsernameRef = getElement(".usernameBtn-edit");
+	const editPasswordRef = getElement(".passwordBtn-edit");
+	const editEmailRef = getElement(".emailBtn-edit");
 	const currentUser = getCurrentUserId();
 	const users = getUserList();
 	console.log(users);
 	console.log(currentUser);
 	const orders = getOrderHistory();
 	//Finding the current login user by filtering through Jesper's API users with currentUser's name in localeStorage
-	const theUser = users.find(
-		(user) => user.id === currentUser
-	);
+	const theUser = users.find((user) => user.id === currentUser);
 	console.log(theUser);
 
 	//Render profile informations
 	renderProfile(theUser);
-	
+
 	//Order history render
-	if (theUser.role === 'admin') {
+	if (theUser.role === "admin") {
 		renderHistory(orders);
 	} else {
 		const theUserHistory = [];
 		for (let order of orders) {
-			if(order.userId === theUser.id) {
+			if (order.userId === theUser.id) {
 				theUserHistory.push(order);
 			}
 		}
 		renderHistory(theUserHistory);
 	}
-	
 
 	//Logout listener button
 	logOutBtnRef.addEventListener("click", (event) => {
@@ -222,7 +220,7 @@ async function profileSetup() {
 		editImage();
 		editLocaleImage(users, currentUser);
 	});
-	
+
 	editUsernameRef.addEventListener("click", (event) => {
 		editUserName();
 		editLocaleUserName(users, currentUser);
@@ -239,20 +237,20 @@ async function profileSetup() {
 	});
 
 	//Order history listener
-	const historyItemsRef = getElementAll('.history__list-item');
-	historyItemsRef.forEach(item => {
+	const historyItemsRef = getElementAll(".history__list-item");
+	historyItemsRef.forEach((item) => {
 		item.addEventListener("click", (event) => {
 			const order = getOrderById(event.target.textContent.slice(1));
 			console.log(order);
 			renderOrderHistory(order);
-		})
+		});
 	});
 
 	//Pop up closer listener
-	const closerRef = getElement('.closer');
-	closerRef.addEventListener('click', (event) => {
+	const closerRef = getElement(".closer");
+	closerRef.addEventListener("click", (event) => {
 		addClass(closerRef, "d-none");
-	})
+	});
 }
 
 // EVENT LISTENERS
