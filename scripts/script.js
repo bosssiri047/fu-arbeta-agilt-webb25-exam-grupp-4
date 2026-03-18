@@ -10,7 +10,6 @@ import {
 	filterMenu,
 	renderMap,
 	closeMap,
-	renderCartOverlay,
 	renderKvitto,
 	renderHistory,
 	renderProfile,
@@ -19,6 +18,7 @@ import {
 	editEmail,
 	renderOrderHistory,
 	editImage,
+	renderCartOverlay,
 } from "./modules/gui.js";
 import {
 	addOrderToHistory,

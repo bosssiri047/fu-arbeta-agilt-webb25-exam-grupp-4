@@ -346,6 +346,12 @@ a {
 			border-bottom: 1px solid var(--clay);
 
 			.menu__card {
+				font: inherit;
+				background-color: transparent;
+				border: none;
+				width: 100%;
+				color: inherit;
+				text-align: start;
 				.menu__card-info-group {
 					display: flex;
 					justify-content: space-between;

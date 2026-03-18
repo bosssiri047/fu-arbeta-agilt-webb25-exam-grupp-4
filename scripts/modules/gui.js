@@ -7,7 +7,10 @@ import { fetchProducts } from "./api.js";
 import { createMapOverlay } from "../components/foodtruck.js";
 import { loadMapEventListeners } from "../script.js";
 import { createKvittoItem } from "../components/kvitto.js";
-import { createOrderHistory, createOrderHistoryListItem } from "../components/history.js";
+import {
+	createOrderHistory,
+	createOrderHistoryListItem,
+} from "../components/history.js";
 import { createLogin } from "../components/login.js";
 import { createRegistration } from "../components/registration.js";
 import { createCartoverlay } from "../components/cartOverlay.js";
@@ -32,10 +35,11 @@ export function renderProducts(products) {
 		getElement(".menu__list").innerHTML += createProduct(product);
 	});
 
-	const menuRef = getElementAll(".menu__list-item");
-	for (let list of menuRef) {
-		list.addEventListener("click", (event) => {
-			(addToCart(list.id), renderCartAlertCount());
+	const menuRef = getElementAll(".menu__card");
+	for (let button of menuRef) {
+		button.addEventListener("click", (event) => {
+			(addToCart(button.id), renderCartAlertCount());
+			console.log(button.id);
 		});
 	}
 }
@@ -130,7 +134,8 @@ export function renderKvitto(products) {
 		ulRef.innerHTML += createKvittoItem(item);
 	}
 
-	document.querySelector("#receiptTotalPrice").textContent = `${products.totalPrice} SEK`;
+	document.querySelector("#receiptTotalPrice").textContent =
+		`${products.totalPrice} SEK`;
 }
 
 //LOGIN
@@ -152,32 +157,32 @@ export function clearLoginReg() {
 
 //Profile Page
 export function renderProfile(theUser) {
-	const profileImgRef = getElement('.profile-img');
-	const usernameRef = getElement('.profile-username');
-	const passwordRef = getElement('.profile-password');
-	const emailRef = getElement('.profile-email');
+	const profileImgRef = getElement(".profile-img");
+	const usernameRef = getElement(".profile-username");
+	const passwordRef = getElement(".profile-password");
+	const emailRef = getElement(".profile-email");
 	//Render out the correct information according to theUser
-	if(!theUser.profile_image) {
-		profileImgRef.src = '../res/logo_transparent.png';
+	if (!theUser.profile_image) {
+		profileImgRef.src = "../res/logo_transparent.png";
 	} else {
 		profileImgRef.src = theUser.profile_image;
 	}
-	
+
 	usernameRef.textContent += theUser.username;
 	passwordRef.textContent += theUser.password;
 	emailRef.textContent += theUser.email;
 }
 
 export function editImage() {
-	const imgRef = getElement('.profile-img');
+	const imgRef = getElement(".profile-img");
 	let newImg = prompt("Please enter image link", "");
-	if(newImg != null) {
+	if (newImg != null) {
 		imgRef.src = newImg;
 	}
 }
 
 export function editUserName() {
-	const usernameRef = getElement('.profile-username');
+	const usernameRef = getElement(".profile-username");
 	let newUsername = prompt("Please enter your new username", "");
 	if (newUsername != null) {
 		usernameRef.textContent = `Username: ${newUsername}`;
@@ -185,7 +190,7 @@ export function editUserName() {
 }
 
 export function editPassword() {
-	const passwordRef = getElement('.profile-password');
+	const passwordRef = getElement(".profile-password");
 	let newPassword = prompt("Please enter your new password", "");
 	if (newPassword != null && newPassword.length >= 8) {
 		passwordRef.textContent = `Password: ${newPassword}`;
@@ -195,10 +200,10 @@ export function editPassword() {
 }
 
 export function editEmail() {
-	const emailRef = getElement('.profile-email');
+	const emailRef = getElement(".profile-email");
 	let newEmail = prompt("Please enter your new email", "");
 	if (newEmail != null) {
-	  emailRef.textContent = `Email: ${newEmail}`;
+		emailRef.textContent = `Email: ${newEmail}`;
 	}
 }
 

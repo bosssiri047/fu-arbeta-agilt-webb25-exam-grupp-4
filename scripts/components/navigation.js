@@ -9,7 +9,7 @@ export function createHamburgerMenu() {
 
 	return `
         <input type="checkbox" class="header__burger" id="burger"/>
-        <label for="burger" class="header__burger-label" aria-label="hamburger-menu">
+        <label tabindex="0" role="button" for="burger" class="header__burger-label" aria-label="hamburger-menu">
             <span class="header__burger-btn"></span>
         </label>
         <nav class="nav-bar">
