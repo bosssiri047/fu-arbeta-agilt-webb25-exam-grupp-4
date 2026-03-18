@@ -763,12 +763,12 @@ a {
   color: red;
   /* Visa/göm vid hover */
   display: none;
+}
 
-  .cartpreview.show {
-    display: block;
-  }
+.cartpreview.show {
+  display: block;
+}
 
-  .cartpreview:hover {
-    display: block;
-  }
+.cartpreview:hover {
+  display: block;
 }

@@ -223,7 +223,35 @@ function loadOrderEventListeners(orderId) {
 // CART UPDATEPREVEW
 // Hämta nuvarande korg
 // Returerna updaterad korg
-async function updateCartPreviewContent() {}
+async function updateCartPreviewContent() {
+  const cart = getCart(); // Hämta Jonathans funktion
+  const products = await fetchProducts(); // Hämta Jonathans funktion
+  const preview = document.getElementById("cartPreview");
+
+  if (!preview) return;
+
+  if (cart.length === 0) {
+    preview.innerHTML = "<p>Varukorgen är tom</p>";
+    return;
+  }
+
+  let html = "<h3>Din varukorg</h3><ul>";
+  let total = 0;
+
+  cart.forEach((item) => {
+    // avbild av Jonathans kod addOrderToHistory!
+    const product = products.items.find((p) => p.id == item.id);
+
+    if (product) {
+      const radSumma = product.price * item.count;
+      html += `<li>${product.name} x${item.count} - ${radSumma} SEK</li>`;
+      total += radSumma;
+    }
+  });
+
+  html += `</ul><p><strong>Totalt: ${total} SEK</strong></p>`;
+  preview.innerHTML = html;
+}
 
 // CART PREVIEW
 function setUpCartPreview() {
@@ -243,6 +271,8 @@ function setUpCartPreview() {
     return;
   }
 
+  preview.classList.add("show");
+
   //lägg till hover effeckt när vi drar musen över varukorgen
   cartLink.addEventListener("mouseenter", () => {
     console.log("Hovrar över varukorgen, med musen");
@@ -255,4 +285,6 @@ function setUpCartPreview() {
     preview.classList.remove("show");
   });
 }
+
 setUpCartPreview();
+updateCartPreviewContent();
