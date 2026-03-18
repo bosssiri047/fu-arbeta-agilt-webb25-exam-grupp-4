@@ -1,23 +1,23 @@
-export function createProduct (product) {
-    if(product.ingredients){
-        //Ingredients string
-        let productIngredients = '';
+export function createProduct(product) {
+	if (product.ingredients) {
+		//Ingredients string
+		let productIngredients = "";
 
-        //Put ingredients from array into a string
-        product.ingredients.forEach(ingredient => {
-            productIngredients += `${ingredient}, `;
-        });
-        
-        //Trimming out the extra ", "
-        productIngredients = productIngredients.slice(0, -2);
+		//Put ingredients from array into a string
+		product.ingredients.forEach((ingredient) => {
+			productIngredients += `${ingredient}, `;
+		});
 
-        return `
+		//Trimming out the extra ", "
+		productIngredients = productIngredients.slice(0, -2);
+
+		return `
             <li class="menu__list-item" id="${product.id}">
 		    	<article class="menu__card" >
 		    		<div class="menu__card-info-group">
-		    			<h3 class="menu__card-name">
+		    			<h2 class="menu__card-name">
 		    				${product.name}
-		    			</h3>
+		    			</h2>
                         <h3 class="menu__card-price">
                             ${product.price} SEK
                         </h3>
@@ -28,14 +28,14 @@ export function createProduct (product) {
 		    	</article>
 		    </li>
         `;
-    } else {
-        return `
+	} else {
+		return `
             <li class="menu__list-item" id="${product.id}">
 		    	<article class="menu__card" >
 		    		<div class="menu__card-info-group">
-		    			<h3 class="menu__card-name">
+		    			<h2 class="menu__card-name">
 		    				${product.name}
-		    			</h3>
+		    			</h2>
                         <h3 class="menu__card-price">
                             ${product.price} SEK
                         </h3>
@@ -43,6 +43,5 @@ export function createProduct (product) {
 		    	</article>
 		    </li>
         `;
-    }
-    
+	}
 }

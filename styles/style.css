@@ -7,7 +7,8 @@
 	--coal: rgba(53, 49, 49, 1); /* Button colour */
 	--snow: rgba(244, 243, 241, 0.94); /* Text colour */
 	--ash: rgba(238, 238, 238, 1); /* Min beställning background colour */
-	--alert: rgba(235, 87, 87, 1); /* Cart alert */
+	--alert: #d63838; /* Cart alert */
+	--white: white;
 }
 
 /* Base */
@@ -204,6 +205,7 @@ a {
 			top: -8px;
 			right: -8px;
 			background-color: var(--alert);
+			color: white;
 			width: 24px;
 			height: 24px;
 			border-radius: 50%;
@@ -245,6 +247,7 @@ a {
 
 				.foodtruck__card-figure {
 					position: relative;
+					background-color: var(--coal);
 					.foodtruck__card-img {
 						width: 110px;
 						height: 100%;
@@ -462,7 +465,7 @@ a {
 		margin: 0 1rem 1rem auto;
 		padding: 0.5rem 0.75rem;
 		background-color: var(--alert);
-		color: var(--snow);
+		color: var(--white);
 		font-size: 0.75rem;
 		font-weight: 600;
 		border: none;
@@ -877,7 +880,7 @@ a {
 /* PROFIL */
 .logoutBtn {
 	background-color: var(--alert);
-	color: var(--ash);
+	color: var(--white);
 	padding: 0 1rem;
 }
 
@@ -896,7 +899,9 @@ a {
 		border: 2px solid var(--clay);
 		width: 90%;
 
-		.profile__group-username, .profile__group-password, .profile__group-email {
+		.profile__group-username,
+		.profile__group-password,
+		.profile__group-email {
 			display: flex;
 			justify-content: space-between;
 		}
@@ -908,19 +913,19 @@ a {
 		}
 
 		.profile-img[src="Default"] {
-		    display: none;
+			display: none;
 		}
 	}
 
 	.closer {
-  		position: fixed; /* Stay in place */
-  		z-index: 1; /* Sit on top */
-  		left: 0;
-  		top: 0;
-  		width: 100%; /* Full width */
-  		height: 100%; /* Full height */
-  		background-color: rgb(0,0,0); /* Fallback color */
-  		background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+		position: fixed; /* Stay in place */
+		z-index: 1; /* Sit on top */
+		left: 0;
+		top: 0;
+		width: 100%; /* Full width */
+		height: 100%; /* Full height */
+		background-color: rgb(0, 0, 0); /* Fallback color */
+		background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
 
 		.order-wrapper {
 			display: flex;
@@ -932,7 +937,8 @@ a {
 			padding-top: 2rem;
 			margin: 15vh auto;
 
-			.order__title, .order__id {
+			.order__title,
+			.order__id {
 				font-size: 1.375rem;
 				font-weight: 700;
 				align-self: center;
@@ -947,7 +953,6 @@ a {
 			.order__total-price {
 				font-size: 2rem;
 				font-weight: 700;
-				
 			}
 
 			.order__list {
@@ -960,7 +965,7 @@ a {
 					padding: 2rem;
 				}
 			}
-		
+
 			.order__product-group {
 				display: flex;
 				justify-content: space-between;
@@ -1009,7 +1014,7 @@ a {
 			display: flex;
 			flex-direction: column;
 			gap: 1.75rem;
-			
+
 			.history__list-item {
 				display: flex;
 				justify-content: space-between;
