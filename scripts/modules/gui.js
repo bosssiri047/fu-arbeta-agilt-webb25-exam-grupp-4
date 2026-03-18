@@ -10,6 +10,7 @@ import { createKvittoItem } from "../components/kvitto.js";
 import { createOrderHistory, createOrderHistoryListItem } from "../components/history.js";
 import { createLogin } from "../components/login.js";
 import { createRegistration } from "../components/registration.js";
+import { createCartoverlay } from "../components/cartOverlay.js";
 
 export function renderHamburgerMenu() {
 	getElement(".header").innerHTML += createHamburgerMenu();
@@ -98,6 +99,11 @@ export function renderCartAlertCount() {
 		alertCountRef.classList.add("d-none");
 		alertCountRef.textContent = "";
 	}
+}
+
+export function renderCartOverlay() {
+	document.querySelector("body").innerHTML += createCartoverlay();
+	console.log("cartOverlay");
 }
 
 //FOODTRUCK
