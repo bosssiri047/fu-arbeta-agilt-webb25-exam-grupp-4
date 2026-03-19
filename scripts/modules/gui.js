@@ -82,7 +82,6 @@ function removeMenuRender() {
 
 //CART
 export function renderCart(products) {
-	renderCartAlertCount();
 	const cart = getCart();
 	const ulRef = document.querySelector("#cartList");
 	ulRef.innerHTML = "";
