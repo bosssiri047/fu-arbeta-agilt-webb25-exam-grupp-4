@@ -180,7 +180,3 @@ function setUniqueId(orderHistory) {
 
   return uniqueId;
 }
-
-// Ta emot varriabel namn
-// Returnera ändrat namn
-function changeName(name) {}

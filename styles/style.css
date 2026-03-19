@@ -759,10 +759,19 @@ a {
   border-radius: 8px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
   z-index: 1000;
-  background-color: blue;
-  color: red;
+  background-color: var(--snow);
+  color: var(--coal);
   /* Visa/göm vid hover */
   display: none;
+}
+
+.cartpreview > ul {
+  list-style: none;
+  padding: 5px;
+}
+
+.cartpreview > ul > li {
+  padding: 3px;
 }
 
 .cartpreview.show {

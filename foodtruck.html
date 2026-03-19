@@ -1,127 +1,127 @@
 <!doctype html>
 <html lang="en">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<script src="./scripts/script.js" type="module" defer></script>
-		<link rel="stylesheet" href="./styles/style.css" />
-		<title>Foodtruck</title>
-	</head>
-	<body>
-		<header class="header">
-			<a href="./index.html" class="header__logo-link">
-				<img
-					src="./res/logo_transparent.png"
-					alt="Small YumYum Foodtruck logo"
-					class="header__logo-img"
-				/>
-			</a>
-			<a href="./cart.html" class="header__cart-link">
-				<img
-					src="./res/cart_icon.svg"
-					alt="Go to cart"
-					class="header__car-img"
-				/>
-				<span class="header__cart-count" id="cartCount">3</span>
-			</a>
-		</header>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="./scripts/script.js" type="module" defer></script>
+    <link rel="stylesheet" href="./styles/style.css" />
+    <title>Foodtruck</title>
+  </head>
+  <body>
+    <header class="header">
+      <a href="./index.html" class="header__logo-link">
+        <img
+          src="./res/logo_transparent.png"
+          alt="Small YumYum Foodtruck logo"
+          class="header__logo-img"
+        />
+      </a>
+      <a href="./cart.html" class="header__cart-link">
+        <img
+          src="./res/cart_icon.svg"
+          alt="Go to cart"
+          class="header__car-img"
+        />
+        <span class="header__cart-count" id="cartCount"></span>
+      </a>
+    </header>
 
-		<main class="foodtruck">
-			<h1 class="foodtruck__title">Hitta din närmsta foodtruck!</h1>
-			<ul class="foodtruck__list" id="foodTruckContainer">
-				<li class="foodtruck__list-item">
-					<article class="foodtruck__card" id="foodTruck1">
-						<figure class="foodtruck__card-figure">
-							<img
-								src="./res/google-maps-blurry.png"
-								alt="Visa på karta"
-								class="foodtruck__card-img"
-							/>
-							<figcaption class="foodtruck__card-fig-caption">
-								Visa på karta
-							</figcaption>
-						</figure>
+    <main class="foodtruck">
+      <h1 class="foodtruck__title">Hitta din närmsta foodtruck!</h1>
+      <ul class="foodtruck__list" id="foodTruckContainer">
+        <li class="foodtruck__list-item">
+          <article class="foodtruck__card" id="foodTruck1">
+            <figure class="foodtruck__card-figure">
+              <img
+                src="./res/google-maps-blurry.png"
+                alt="Visa på karta"
+                class="foodtruck__card-img"
+              />
+              <figcaption class="foodtruck__card-fig-caption">
+                Visa på karta
+              </figcaption>
+            </figure>
 
-						<div class="foodtruck__card-info-group">
-							<h2 class="foodtruck__card-adress">
-								Universitetsgatan 2, 651 88 Karlstad
-							</h2>
-							<h3 class="foodtruck__card-opening-hours">
-								Öppet från 09:00 till 15:00
-							</h3>
-						</div>
-					</article>
-				</li>
-				<li class="foodtruck__list-item">
-					<article class="foodtruck__card" id="foodTruck2">
-						<figure class="foodtruck__card-figure">
-							<img
-								src="./res/google-maps-blurry.png"
-								alt="Visa på karta"
-								class="foodtruck__card-img"
-							/>
-							<figcaption class="foodtruck__card-fig-caption">
-								Visa på karta
-							</figcaption>
-						</figure>
+            <div class="foodtruck__card-info-group">
+              <h2 class="foodtruck__card-adress">
+                Universitetsgatan 2, 651 88 Karlstad
+              </h2>
+              <h3 class="foodtruck__card-opening-hours">
+                Öppet från 09:00 till 15:00
+              </h3>
+            </div>
+          </article>
+        </li>
+        <li class="foodtruck__list-item">
+          <article class="foodtruck__card" id="foodTruck2">
+            <figure class="foodtruck__card-figure">
+              <img
+                src="./res/google-maps-blurry.png"
+                alt="Visa på karta"
+                class="foodtruck__card-img"
+              />
+              <figcaption class="foodtruck__card-fig-caption">
+                Visa på karta
+              </figcaption>
+            </figure>
 
-						<div class="foodtruck__card-info-group">
-							<h2 class="foodtruck__card-adress">
-								Skutbergsvägen 2, 653 46 Karlstad
-							</h2>
-							<h3 class="foodtruck__card-opening-hours">
-								Öppet från 08:00 till 17:00
-							</h3>
-						</div>
-					</article>
-				</li>
-				<li class="foodtruck__list-item">
-					<article class="foodtruck__card" id="foodTruck3">
-						<figure class="foodtruck__card-figure">
-							<img
-								src="./res/google-maps-blurry.png"
-								alt="Visa på karta"
-								class="foodtruck__card-img"
-							/>
-							<figcaption class="foodtruck__card-fig-caption">
-								Visa på karta
-							</figcaption>
-						</figure>
+            <div class="foodtruck__card-info-group">
+              <h2 class="foodtruck__card-adress">
+                Skutbergsvägen 2, 653 46 Karlstad
+              </h2>
+              <h3 class="foodtruck__card-opening-hours">
+                Öppet från 08:00 till 17:00
+              </h3>
+            </div>
+          </article>
+        </li>
+        <li class="foodtruck__list-item">
+          <article class="foodtruck__card" id="foodTruck3">
+            <figure class="foodtruck__card-figure">
+              <img
+                src="./res/google-maps-blurry.png"
+                alt="Visa på karta"
+                class="foodtruck__card-img"
+              />
+              <figcaption class="foodtruck__card-fig-caption">
+                Visa på karta
+              </figcaption>
+            </figure>
 
-						<div class="foodtruck__card-info-group">
-							<h2 class="foodtruck__card-adress">
-								Treffenbergsvägen, 652 29 Karlstad
-							</h2>
-							<h3 class="foodtruck__card-opening-hours">
-								Öppet från 12:00 till 18:00
-							</h3>
-						</div>
-					</article>
-				</li>
-				<li class="foodtruck__list-item">
-					<article class="foodtruck__card" id="foodTruck4">
-						<figure class="foodtruck__card-figure">
-							<img
-								src="./res/google-maps-blurry.png"
-								alt="Visa på karta"
-								class="foodtruck__card-img"
-							/>
-							<figcaption class="foodtruck__card-fig-caption">
-								Visa på karta
-							</figcaption>
-						</figure>
+            <div class="foodtruck__card-info-group">
+              <h2 class="foodtruck__card-adress">
+                Treffenbergsvägen, 652 29 Karlstad
+              </h2>
+              <h3 class="foodtruck__card-opening-hours">
+                Öppet från 12:00 till 18:00
+              </h3>
+            </div>
+          </article>
+        </li>
+        <li class="foodtruck__list-item">
+          <article class="foodtruck__card" id="foodTruck4">
+            <figure class="foodtruck__card-figure">
+              <img
+                src="./res/google-maps-blurry.png"
+                alt="Visa på karta"
+                class="foodtruck__card-img"
+              />
+              <figcaption class="foodtruck__card-fig-caption">
+                Visa på karta
+              </figcaption>
+            </figure>
 
-						<div class="foodtruck__card-info-group">
-							<h2 class="foodtruck__card-adress">
-								Kungsgatan, 652 24 Karlstad
-							</h2>
-							<h3 class="foodtruck__card-opening-hours">
-								Öppet från 11:00 till 16:00
-							</h3>
-						</div>
-					</article>
-				</li>
-			</ul>
-		</main>
-	</body>
+            <div class="foodtruck__card-info-group">
+              <h2 class="foodtruck__card-adress">
+                Kungsgatan, 652 24 Karlstad
+              </h2>
+              <h3 class="foodtruck__card-opening-hours">
+                Öppet från 11:00 till 16:00
+              </h3>
+            </div>
+          </article>
+        </li>
+      </ul>
+    </main>
+  </body>
 </html>

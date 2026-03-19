@@ -56,14 +56,16 @@ function pageSetup() {
   renderHamburgerMenu();
   renderCartAlertCount();
   // vicent lagt till
-  loadCartPreviewListeners();
+  updateCartPreviewContent();
+  setUpCartPreview();
 }
 function foodtruckSetup() {
   renderHamburgerMenu();
   loadFoodtruckEventListeners();
   renderCartAlertCount();
   // vincent lagt till
-  loadCartPreviewListeners();
+  updateCartPreviewContent();
+  setUpCartPreview();
 }
 
 async function menuSetup() {
@@ -73,7 +75,8 @@ async function menuSetup() {
   renderProducts(products);
   renderCartAlertCount();
   // Vincent lagt till
-  loadCartPreviewListeners();
+  updateCartPreviewContent();
+  setUpCartPreview();
 
   const menuRef = getElementAll(".menu__list-item");
   console.log(menuRef);
@@ -239,8 +242,6 @@ function loadOrderEventListeners(orderId) {
 }
 
 // CART UPDATEPREVEW
-// Hämta nuvarande korg
-// Returerna updaterad korg
 async function updateCartPreviewContent() {
   const cart = getCart(); // Hämta Jonathans funktion
   const products = await fetchProducts(); // Hämta Jonathans funktion
@@ -273,19 +274,25 @@ async function updateCartPreviewContent() {
 
 // CART PREVIEW
 function setUpCartPreview() {
+  // Hoppa över om vi är på cart.html
+  if (window.location.pathname.includes("cart.html")) {
+    // console.log("Hoppar över preview på cart.html");
+    return;
+  }
+
   let cartLink = document.querySelector(".header__cart-link");
   let preview = document.querySelector("#cartPreview");
 
-  console.log("cartlink:", cartLink);
-  console.log("preview", preview);
+  // console.log("cartlink:", cartLink);
+  // console.log("preview", preview);
 
   // if kolla efter cart
   if (!cartLink) {
-    console.log("Länken hittades inte");
+    // console.log("Länken hittades inte");
     return;
   }
   if (!preview) {
-    console.log("Previw hittades inte");
+    // console.log("Previw hittades inte");
     return;
   }
 
@@ -306,19 +313,26 @@ function setUpCartPreview() {
     }
   });
 
-  // KLICK för mobil
+  // KLICK för mobil (uppdatering)
   cartLink.addEventListener("click", (event) => {
     if (window.innerWidth <= 768) {
-      event.preventDefault();
-      updateCartPreviewContent();
-      preview.classList.add("show");
+      // Om preview redan syns → gå till cart.html
+      if (preview.classList.contains("show")) {
+        // Låt länken fungera normalt (gå till cart.html)
+        return; // Lämnar funktionen, så eventet fortsätter som vanligt
+      } else {
+        // Annars visa preview och stoppa navigation
+        event.preventDefault();
+        updateCartPreviewContent();
+        preview.classList.add("show");
+      }
     }
   });
 
   // Stäng vid klick utanför (mobil)
   document.addEventListener("click", (event) => {
     if (window.innerWidth <= 768) {
-      if (!cartLink.contains(e.target) && !preview.contains(e.target)) {
+      if (!cartLink.contains(event.target) && !preview.contains(event.target)) {
         preview.classList.remove("show");
       }
     }
@@ -328,24 +342,4 @@ function setUpCartPreview() {
   preview.addEventListener("click", (event) => {
     event.stopPropagation();
   });
-
-  // gör så att det syns direkt (finns för att testa)
-  // preview.classList.add("show");
-
-  //lägg till hover effeckt när vi drar musen över varukorgen
-  cartLink.addEventListener("mouseenter", () => {
-    console.log("Hovrar över varukorgen, med musen");
-    updateCartPreviewContent();
-    preview.classList.add("show");
-  });
-
-  // när vi inte hovrar på varukorgen
-  cartLink.addEventListener("mouseleave", () => {
-    console.log("Musen hovrar inte över varukorgen");
-    preview.classList.remove("show");
-  });
 }
-
-setUpCartPreview();
-// updateCartPreviewContent();
-// loadCartPreviewListeners();
