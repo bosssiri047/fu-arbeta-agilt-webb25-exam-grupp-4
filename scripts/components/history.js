@@ -1,14 +1,16 @@
 export function createOrderHistory(orders) {
 	return `
     <li class="history__list-item">
-        <h3 class="history__item-id">#${orders.id}</h3>
-        <h3 class="history__item-date">${orders.date}</h3>
+        <button class="history__btn" id="${orders.id}">
+            <h3 class="history__item-id">#${orders.id}</h3>
+            <h3 class="history__item-date">${orders.date}</h3>
+        </button>
     </li>
     `;
 }
 
 export function createOrderHistoryListItem(product) {
-    return `
+	return `
     <li class="order__list-item">
         <div class="order__product-group">
             <h2 class="order__product-name">${product.name}</h2>

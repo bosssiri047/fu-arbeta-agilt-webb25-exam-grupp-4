@@ -2,12 +2,20 @@ import { createCartItem } from "../components/cart.js";
 import { createHamburgerMenu } from "../components/navigation.js";
 import { createProduct } from "../components/product.js";
 import { getElement, getElementAll, removeClass } from "../utils/domutils.js";
-import { getCart, addToCart, getCartCount, getUserList } from "../modules/localeStroage.js";
+import {
+	getCart,
+	addToCart,
+	getCartCount,
+	getUserList,
+} from "../modules/localeStroage.js";
 import { fetchProducts } from "./api.js";
 import { createMapOverlay } from "../components/foodtruck.js";
 import { loadMapEventListeners } from "../script.js";
 import { createKvittoItem } from "../components/kvitto.js";
-import { createOrderHistory, createOrderHistoryListItem } from "../components/history.js";
+import {
+	createOrderHistory,
+	createOrderHistoryListItem,
+} from "../components/history.js";
 import { createLogin } from "../components/login.js";
 import { createRegistration } from "../components/registration.js";
 import { checkImageExists, checkRepeat } from "../utils/utils.js";
@@ -21,9 +29,7 @@ export function moveBurgerTopLeft() {
 	getElement(".header__burger-label").classList.add(
 		"header__burger-label--top-left",
 	);
-	getElement(".header__burger").classList.add(
-		"header__burger-label--top-left",
-	);
+	getElement("#burger").classList.add("header__burger--top-left");
 }
 
 //Render the whole menu
@@ -36,10 +42,11 @@ export function renderProducts(products) {
 		getElement(".menu__list").innerHTML += createProduct(product);
 	});
 
-	const menuRef = getElementAll(".menu__list-item");
-	for (let list of menuRef) {
-		list.addEventListener("click", (event) => {
-			(addToCart(list.id), renderCartAlertCount());
+	const menuRef = getElementAll(".menu__card");
+	for (let button of menuRef) {
+		button.addEventListener("click", (event) => {
+			(addToCart(button.id), renderCartAlertCount());
+			console.log(button.id);
 		});
 	}
 }
@@ -60,10 +67,10 @@ export function filterMenu(type, products) {
 		getElement(".menu__list").innerHTML += createProduct(product);
 	});
 
-	const menuRef = getElementAll(".menu__list-item");
-	for (let list of menuRef) {
-		list.addEventListener("click", (event) => {
-			(addToCart(list.id), renderCartAlertCount());
+	const menuRef = getElementAll(".menu__card");
+	for (let button of menuRef) {
+		button.addEventListener("click", (event) => {
+			(addToCart(button.id), renderCartAlertCount());
 		});
 	}
 }
@@ -75,7 +82,6 @@ function removeMenuRender() {
 
 //CART
 export function renderCart(products) {
-	renderCartAlertCount();
 	const cart = getCart();
 	const ulRef = document.querySelector("#cartList");
 	ulRef.innerHTML = "";
@@ -119,6 +125,8 @@ export function renderMap(id) {
 
 	bodyRef.appendChild(divRef);
 	loadMapEventListeners();
+
+	document.querySelector("#mapCloseBtn").focus();
 }
 
 export function closeMap() {
@@ -134,7 +142,8 @@ export function renderKvitto(products) {
 		ulRef.innerHTML += createKvittoItem(item);
 	}
 
-	document.querySelector("#receiptTotalPrice").textContent = `${products.totalPrice} SEK`;
+	document.querySelector("#receiptTotalPrice").textContent =
+		`${products.totalPrice} SEK`;
 }
 
 //LOGIN
@@ -156,17 +165,17 @@ export function clearLoginReg() {
 
 //Profile Page
 export function renderProfile(theUser) {
-	const profileImgRef = getElement('.profile-img');
-	const usernameRef = getElement('.profile-username');
-	const passwordRef = getElement('.profile-password');
-	const emailRef = getElement('.profile-email');
+	const profileImgRef = getElement(".profile-img");
+	const usernameRef = getElement(".profile-username");
+	const passwordRef = getElement(".profile-password");
+	const emailRef = getElement(".profile-email");
 	//Render out the correct information according to theUser
-	if(!theUser.profile_image) {
-		profileImgRef.src = '../res/logo_transparent.png';
+	if (!theUser.profile_image) {
+		profileImgRef.src = "../res/logo_transparent.png";
 	} else {
 		profileImgRef.src = theUser.profile_image;
 	}
-	
+
 	usernameRef.textContent += theUser.username;
 	passwordRef.textContent += theUser.password;
 	emailRef.textContent += theUser.email;
@@ -174,21 +183,21 @@ export function renderProfile(theUser) {
 
 //Profile Edits
 export function editImage() {
-	const imgRef = getElement('.profile-img');
+	const imgRef = getElement(".profile-img");
 	let newImg = prompt("Please enter image link", "");
 	console.log(newImg);
-	if(newImg && checkImageExists(newImg)) {
+	if (newImg && checkImageExists(newImg)) {
 		imgRef.src = newImg;
-	} else if (newImg === '') {
-		imgRef.src = './res/logo_transparent.png';
+	} else if (newImg === "") {
+		imgRef.src = "./res/logo_transparent.png";
 	}
 }
 
 export function editUserName() {
-	const usernameRef = getElement('.profile-username');
+	const usernameRef = getElement(".profile-username");
 	const userList = getUserList();
 	let newUsername = prompt("Please enter your new username.", "");
-	if (newUsername != null && checkRepeat(userList, newUsername, 'username')) {
+	if (newUsername != null && checkRepeat(userList, newUsername, "username")) {
 		usernameRef.textContent = `Username: ${newUsername}`;
 	} else {
 		alert("Username already exists.");
@@ -196,10 +205,14 @@ export function editUserName() {
 }
 
 export function editPassword() {
-	const passwordRef = getElement('.profile-password');
+	const passwordRef = getElement(".profile-password");
 	const userList = getUserList();
 	let newPassword = prompt("Please enter your new password.", "");
-	if (newPassword != null && newPassword.length >= 8 && checkRepeat(userList, newPassword, 'password')) {
+	if (
+		newPassword != null &&
+		newPassword.length >= 8 &&
+		checkRepeat(userList, newPassword, "password")
+	) {
 		passwordRef.textContent = `Password: ${newPassword}`;
 	} else if (newPassword != null && newPassword.length < 8) {
 		alert("The length must be longer than 8.");
@@ -209,12 +222,16 @@ export function editPassword() {
 }
 
 export function editEmail() {
-	const emailRef = getElement('.profile-email');
+	const emailRef = getElement(".profile-email");
 	const userList = getUserList();
 	let newEmail = prompt("Please enter your new email", "");
-	if (newEmail != null && newEmail.match('@') &&checkRepeat(userList, newEmail, 'email')) {
-	  emailRef.textContent = `Email: ${newEmail}`;
-	} else if (newEmail != null && !newEmail.match('@')) {
+	if (
+		newEmail != null &&
+		newEmail.match("@") &&
+		checkRepeat(userList, newEmail, "email")
+	) {
+		emailRef.textContent = `Email: ${newEmail}`;
+	} else if (newEmail != null && !newEmail.match("@")) {
 		alert("Input the correct email format");
 	} else {
 		alert("Email already in use.");
