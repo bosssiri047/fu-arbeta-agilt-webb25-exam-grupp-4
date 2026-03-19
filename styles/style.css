@@ -742,6 +742,7 @@ a {
   width: fit-content;
   color: var(--coal);
   border-radius: 10px;
+  margin-bottom: 8rem;
   /* background-color: red; */
 
   .aboutheader {

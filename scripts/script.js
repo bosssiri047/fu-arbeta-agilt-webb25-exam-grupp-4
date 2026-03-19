@@ -1,4 +1,3 @@
-import { aboutus } from "./components/aboutus.js";
 import { fetchProducts } from "./modules/api.js";
 import {
   moveBurgerTopLeft,
@@ -49,7 +48,7 @@ if (
   orderSetup();
 } else if (window.location.pathname.includes("aboutus.html")) {
   console.log("aboutus.html");
-  aboutus();
+  aboutusSetup();
 }
 
 function pageSetup() {
@@ -64,6 +63,14 @@ function foodtruckSetup() {
   loadFoodtruckEventListeners();
   renderCartAlertCount();
   // vincent lagt till
+  updateCartPreviewContent();
+  setUpCartPreview();
+}
+
+function aboutusSetup() {
+  renderHamburgerMenu();
+  renderCartAlertCount();
+  // vicent lagt till
   updateCartPreviewContent();
   setUpCartPreview();
 }
