@@ -236,20 +236,30 @@ async function profileSetup() {
 		editLocaleEmail(users, currentUser);
 	});
 
+	const closerRef = getElement(".closer");
 	//Order history listener
-	const historyItemsRef = getElementAll(".history__list-item");
+	const historyItemsRef = getElementAll(".history__btn");
 	historyItemsRef.forEach((item) => {
 		item.addEventListener("click", (event) => {
-			const order = getOrderById(event.target.textContent.slice(1));
+			const order = getOrderById(event.target.closest("button").id);
 			console.log(order);
 			renderOrderHistory(order);
+			closerRef.focus();
 		});
 	});
 
 	//Pop up closer listener
-	const closerRef = getElement(".closer");
+
 	closerRef.addEventListener("click", (event) => {
 		addClass(closerRef, "d-none");
+	});
+
+	window.addEventListener("keydown", (event) => {
+		if (event.key === "Enter" || event.key === " ") {
+			if (!closerRef.classList.contains("d-none")) {
+				addClass(closerRef, "d-none");
+			}
+		}
 	});
 }
 

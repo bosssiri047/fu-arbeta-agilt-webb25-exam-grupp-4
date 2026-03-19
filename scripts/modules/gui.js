@@ -23,6 +23,7 @@ export function moveBurgerTopLeft() {
 	getElement(".header__burger-label").classList.add(
 		"header__burger-label--top-left",
 	);
+	getElement("#burger").classList.add("header__burger--top-left");
 }
 
 //Render the whole menu
@@ -60,10 +61,10 @@ export function filterMenu(type, products) {
 		getElement(".menu__list").innerHTML += createProduct(product);
 	});
 
-	const menuRef = getElementAll(".menu__list-item");
-	for (let list of menuRef) {
-		list.addEventListener("click", (event) => {
-			(addToCart(list.id), renderCartAlertCount());
+	const menuRef = getElementAll(".menu__card");
+	for (let button of menuRef) {
+		button.addEventListener("click", (event) => {
+			(addToCart(button.id), renderCartAlertCount());
 		});
 	}
 }
@@ -119,6 +120,8 @@ export function renderMap(id) {
 
 	bodyRef.appendChild(divRef);
 	loadMapEventListeners();
+
+	document.querySelector("#mapCloseBtn").focus();
 }
 
 export function closeMap() {

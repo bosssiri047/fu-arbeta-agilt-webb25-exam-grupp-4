@@ -8,8 +8,8 @@ export function createHamburgerMenu() {
 			: `<a href="./profile.html" class="nav-bar__link">Min Profil</a>`;
 
 	return `
-        <input type="checkbox" class="header__burger" id="burger"/>
-        <label tabindex="0" role="button" for="burger" class="header__burger-label" aria-label="hamburger-menu">
+        <input tabindex="0" type="checkbox" class="header__burger" id="burger"/>
+        <label for="burger" class="header__burger-label" aria-label="hamburger-menu">
             <span class="header__burger-btn"></span>
         </label>
         <nav class="nav-bar">
