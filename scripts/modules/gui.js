@@ -21,6 +21,9 @@ export function moveBurgerTopLeft() {
 	getElement(".header__burger-label").classList.add(
 		"header__burger-label--top-left",
 	);
+	getElement(".header__burger").classList.add(
+		"header__burger-label--top-left",
+	);
 }
 
 //Render the whole menu
