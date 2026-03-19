@@ -340,7 +340,7 @@ function loadCartEventListeners(products) {
   document.querySelector("#checkoutBtn").addEventListener("click", () => {
     const cart = getCart();
 
-    if (cart) {
+    if (cart.length > 0) {
       if (userLoggedIn() === "guest") {
         renderCartOverlay();
         loadCartOverlayEventListeners(cart, products);
