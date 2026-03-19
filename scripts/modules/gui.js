@@ -2,7 +2,12 @@ import { createCartItem } from "../components/cart.js";
 import { createHamburgerMenu } from "../components/navigation.js";
 import { createProduct } from "../components/product.js";
 import { getElement, getElementAll, removeClass } from "../utils/domutils.js";
-import { getCart, addToCart, getCartCount } from "../modules/localeStroage.js";
+import {
+	getCart,
+	addToCart,
+	getCartCount,
+	getUserList,
+} from "../modules/localeStroage.js";
 import { fetchProducts } from "./api.js";
 import { createMapOverlay } from "../components/foodtruck.js";
 import { loadMapEventListeners } from "../script.js";
@@ -13,6 +18,7 @@ import {
 } from "../components/history.js";
 import { createLogin } from "../components/login.js";
 import { createRegistration } from "../components/registration.js";
+import { checkImageExists, checkRepeat } from "../utils/utils.js";
 import { createCartoverlay } from "../components/cartOverlay.js";
 
 export function renderHamburgerMenu() {
@@ -176,40 +182,64 @@ export function renderProfile(theUser) {
 	emailRef.textContent += theUser.email;
 }
 
+//Profile Edits
 export function editImage() {
 	const imgRef = getElement(".profile-img");
 	let newImg = prompt("Please enter image link", "");
-	if (newImg != null) {
+	console.log(newImg);
+	if (newImg && checkImageExists(newImg)) {
 		imgRef.src = newImg;
+	} else if (newImg === "") {
+		imgRef.src = "./res/logo_transparent.png";
 	}
 }
 
 export function editUserName() {
 	const usernameRef = getElement(".profile-username");
-	let newUsername = prompt("Please enter your new username", "");
-	if (newUsername != null) {
+	const userList = getUserList();
+	let newUsername = prompt("Please enter your new username.", "");
+	if (newUsername != null && checkRepeat(userList, newUsername, "username")) {
 		usernameRef.textContent = `Username: ${newUsername}`;
+	} else {
+		alert("Username already exists.");
 	}
 }
 
 export function editPassword() {
 	const passwordRef = getElement(".profile-password");
-	let newPassword = prompt("Please enter your new password", "");
-	if (newPassword != null && newPassword.length >= 8) {
+	const userList = getUserList();
+	let newPassword = prompt("Please enter your new password.", "");
+	if (
+		newPassword != null &&
+		newPassword.length >= 8 &&
+		checkRepeat(userList, newPassword, "password")
+	) {
 		passwordRef.textContent = `Password: ${newPassword}`;
+	} else if (newPassword != null && newPassword.length < 8) {
+		alert("The length must be longer than 8.");
 	} else {
-		newPassword = prompt("The length must be longer than 8", "");
+		alert("Password cannot be the same as the old one.");
 	}
 }
 
 export function editEmail() {
 	const emailRef = getElement(".profile-email");
+	const userList = getUserList();
 	let newEmail = prompt("Please enter your new email", "");
-	if (newEmail != null) {
+	if (
+		newEmail != null &&
+		newEmail.match("@") &&
+		checkRepeat(userList, newEmail, "email")
+	) {
 		emailRef.textContent = `Email: ${newEmail}`;
+	} else if (newEmail != null && !newEmail.match("@")) {
+		alert("Input the correct email format");
+	} else {
+		alert("Email already in use.");
 	}
 }
 
+//Profile history
 export function renderHistory(orders) {
 	const uiRef = getElement("#historyList");
 	uiRef.innerHTML = "";

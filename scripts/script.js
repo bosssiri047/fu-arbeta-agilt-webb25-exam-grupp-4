@@ -19,6 +19,7 @@ import {
 	renderOrderHistory,
 	editImage,
 	renderCartOverlay,
+	renderCartOverlay,
 } from "./modules/gui.js";
 import {
 	addOrderToHistory,
