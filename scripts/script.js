@@ -1,22 +1,44 @@
-import { fetchProducts } from "./modules/api.js";
+import { fetchProducts, fetchUsers } from "./modules/api.js";
 import {
   moveBurgerTopLeft,
   renderCart,
   renderCartAlertCount,
   renderHamburgerMenu,
   renderProducts,
+  renderLogin,
+  renderRegistration,
   filterMenu,
   renderMap,
   closeMap,
   renderKvitto,
+  renderHistory,
+  renderProfile,
+  editUserName,
+  editPassword,
+  editEmail,
+  renderOrderHistory,
+  editImage,
+  renderCartOverlay,
 } from "./modules/gui.js";
 import {
   addOrderToHistory,
   addToCart,
+  createUser,
   emptyCart,
   getCart,
+  getCurrentUserId,
   getOrderById,
+  getOrderHistory,
+  getUserList,
+  logOut,
   removeFromCart,
+  setCurrentUser,
+  setStarterUserList,
+  userLoggedIn,
+  editLocaleUserName,
+  editLocalePassword,
+  editLocaleEmail,
+  editLocaleImage,
 } from "./modules/localeStroage.js";
 import {
   getElement,
@@ -46,10 +68,19 @@ if (
 } else if (window.location.pathname.includes("order.html")) {
   console.log("order.html");
   orderSetup();
+} else if (window.location.pathname.includes("login.html")) {
+  console.log("login.html");
+  loginSetup();
+} else if (window.location.pathname.includes("profile.html")) {
+  console.log("profile.html");
+  profileSetup();
 } else if (window.location.pathname.includes("aboutus.html")) {
   console.log("aboutus.html");
   aboutusSetup();
 }
+
+//Set starter users
+// setStarterUserList();
 
 function pageSetup() {
   renderHamburgerMenu();
@@ -87,19 +118,6 @@ async function menuSetup() {
 
   const menuRef = getElementAll(".menu__list-item");
   console.log(menuRef);
-
-  // preview vincent start
-  for (let list of menuRef) {
-    list.addEventListener("click", (event) => {
-      addToCart(list.id);
-      renderCartAlertCount();
-      // uppdatera preview när någon lägger till
-      updateCartPreviewContent();
-      console.log("preview menu", updateCartPreviewContent);
-    });
-  }
-  // vincent preview end
-
   const wontonFilterRef = getElement("#filter__wonton");
   const dipFilterRef = getElement("#filter__dip");
   const drinkFilterRef = getElement("#filter__drink");
@@ -171,6 +189,99 @@ function receiptSetup() {
   renderKvitto(products);
 }
 
+async function loginSetup() {
+  renderLogin();
+  renderHamburgerMenu();
+  loadLoginEventListeners();
+  console.log(`test ${userLoggedIn()}`);
+}
+
+async function profileSetup() {
+  renderHamburgerMenu();
+  const logOutBtnRef = getElement(".logoutBtn");
+  const editImgRef = getElement(".profile-img");
+  const editUsernameRef = getElement(".usernameBtn-edit");
+  const editPasswordRef = getElement(".passwordBtn-edit");
+  const editEmailRef = getElement(".emailBtn-edit");
+  const currentUser = getCurrentUserId();
+  const users = getUserList();
+  console.log(users);
+  console.log(currentUser);
+  const orders = getOrderHistory();
+  //Finding the current login user by filtering through Jesper's API users with currentUser's name in localeStorage
+  const theUser = users.find((user) => user.id === currentUser);
+  console.log(theUser);
+
+  //Render profile informations
+  renderProfile(theUser);
+
+  //Order history render
+  if (theUser.role === "admin") {
+    renderHistory(orders);
+  } else {
+    const theUserHistory = [];
+    for (let order of orders) {
+      if (order.userId === theUser.id) {
+        theUserHistory.push(order);
+      }
+    }
+    renderHistory(theUserHistory);
+  }
+
+  //Logout listener button
+  logOutBtnRef.addEventListener("click", (event) => {
+    logOut();
+    window.location.pathname = "index.html";
+  });
+
+  //Edit buttons
+  editImgRef.addEventListener("click", (event) => {
+    editImage();
+    editLocaleImage(users, currentUser);
+  });
+
+  editUsernameRef.addEventListener("click", (event) => {
+    editUserName();
+    editLocaleUserName(users, currentUser);
+  });
+
+  editPasswordRef.addEventListener("click", (event) => {
+    editPassword();
+    editLocalePassword(users, currentUser);
+  });
+
+  editEmailRef.addEventListener("click", (event) => {
+    editEmail();
+    editLocaleEmail(users, currentUser);
+  });
+
+  const closerRef = getElement(".closer");
+  //Order history listener
+  const historyItemsRef = getElementAll(".history__btn");
+  historyItemsRef.forEach((item) => {
+    item.addEventListener("click", (event) => {
+      const order = getOrderById(event.target.closest("button").id);
+      console.log(order);
+      renderOrderHistory(order);
+      closerRef.focus();
+    });
+  });
+
+  //Pop up closer listener
+
+  closerRef.addEventListener("click", (event) => {
+    addClass(closerRef, "d-none");
+  });
+
+  window.addEventListener("keydown", (event) => {
+    if (event.key === "Enter" || event.key === " ") {
+      if (!closerRef.classList.contains("d-none")) {
+        addClass(closerRef, "d-none");
+      }
+    }
+  });
+}
+
 // EVENT LISTENERS
 
 // FOODTRUCK PAGE
@@ -230,13 +341,29 @@ function loadCartEventListeners(products) {
     const cart = getCart();
 
     if (cart) {
-      const orderId = addOrderToHistory(cart, products);
-      // console.log(orderId);
-      emptyCart();
-      document.querySelector("#cartList").innerHTML = "";
-      // console.log(getOrderById(orderId));
-      location.href = `./order.html?orderId=${orderId}`;
+      if (userLoggedIn() === "guest") {
+        renderCartOverlay();
+        loadCartOverlayEventListeners(cart, products);
+      } else {
+        const orderId = addOrderToHistory(cart, products);
+        emptyCart();
+        document.querySelector("#cartList").innerHTML = "";
+        location.href = `./order.html?orderId=${orderId}`;
+      }
     }
+  });
+}
+
+function loadCartOverlayEventListeners(cart, products) {
+  document.querySelector("#cartLoginBtn").addEventListener("click", () => {
+    location.href = "./login.html";
+  });
+
+  document.querySelector("#cartContinueBtn").addEventListener("click", () => {
+    const orderId = addOrderToHistory(cart, products);
+    emptyCart();
+    document.querySelector("#cartList").innerHTML = "";
+    location.href = `./order.html?orderId=${orderId}`;
   });
 }
 
@@ -245,6 +372,134 @@ function loadCartEventListeners(products) {
 function loadOrderEventListeners(orderId) {
   document.querySelector("#viewReceipt").addEventListener("click", () => {
     location.href = `./receipt.html?orderId=${orderId}`;
+  });
+
+  document
+    .querySelector("#viewReceipt")
+    .addEventListener("keydown", (event) => {
+      if (event.key === "Enter" || event.key === " ") {
+        event.preventDefault();
+        location.href = `./receipt.html?orderId=${orderId}`;
+      }
+    });
+}
+
+//LOGIN
+
+async function loadLoginEventListeners() {
+  document
+    .querySelector("#loginBtn")
+    .addEventListener("click", async (event) => {
+      event.preventDefault();
+
+      const userInputRef = document.querySelector("#username");
+      const pwInputRef = document.querySelector("#password");
+      userInputRef.placeholder = "";
+      pwInputRef.placeholder = "";
+
+      const userList = getUserList();
+      console.log(userList);
+
+      const validUser = userList.find(
+        (user) => user.username === userInputRef.value,
+      );
+
+      if (!validUser) {
+        userInputRef.classList.add("login__input--error");
+        userInputRef.value = "";
+        userInputRef.placeholder = "Användarnamn finns inte";
+        return;
+      } else {
+        userInputRef.classList.remove("login__input--error");
+
+        if (validUser.password !== pwInputRef.value) {
+          pwInputRef.classList.add("login__input--error");
+          pwInputRef.value = "";
+          pwInputRef.placeholder = "Fel lösenord";
+          return;
+        } else {
+          setCurrentUser(validUser);
+          location.href = "./index.html";
+        }
+      }
+    });
+
+  document.querySelector("#goToRegister").addEventListener("click", (event) => {
+    event.preventDefault();
+
+    renderRegistration();
+    renderHamburgerMenu();
+    loadRegistrationEventListeners();
+  });
+}
+
+//REGISTRATION
+
+function loadRegistrationEventListeners() {
+  document.querySelector("#registerBtn").addEventListener("click", (event) => {
+    event.preventDefault();
+
+    const userList = getUserList();
+    const usernameInputRef = document.querySelector("#username");
+    const emailInputRef = document.querySelector("#email");
+    const pwInputRef = document.querySelector("#password");
+
+    usernameInputRef.classList.remove("login__input--error");
+    usernameInputRef.placeholder = "";
+    emailInputRef.classList.remove("login__input--error");
+    emailInputRef.placeholder = "";
+    pwInputRef.classList.remove("login__input--error");
+    pwInputRef.placeholder = "";
+
+    if (
+      !userList.find(
+        (user) => user.username === usernameInputRef.value.trim().toLowerCase(),
+      )
+    ) {
+      if (usernameInputRef.value.length !== 0) {
+        if (
+          !userList.find(
+            (user) => user.email === emailInputRef.value.trim().toLowerCase(),
+          )
+        ) {
+          if (pwInputRef.value.length >= 8) {
+            createUser(
+              usernameInputRef.value.trim().toLowerCase(),
+              emailInputRef.value.trim().toLowerCase(),
+              pwInputRef.value,
+            );
+            location.href = "./login.html";
+          } else {
+            pwInputRef.classList.add("login__input--error");
+            pwInputRef.value = "";
+            pwInputRef.placeholder =
+              "Lösenordet måste vara minst 8 karaktärer långt";
+          }
+        } else {
+          emailInputRef.classList.add("login__input--error");
+          emailInputRef.value = "";
+          emailInputRef.placeholder =
+            "Email adressen används redan, vänligen välj en ny";
+        }
+      } else {
+        usernameInputRef.classList.add("login__input--error");
+        usernameInputRef.value = "";
+        usernameInputRef.placeholder = "Namnet får inte vara tomt";
+      }
+    } else {
+      usernameInputRef.classList.add("login__input--error");
+      usernameInputRef.value = "";
+      usernameInputRef.placeholder =
+        "Namnet används redan, vänligen välj ett nytt";
+    }
+  });
+
+  document.querySelector("#goToLogin").addEventListener("click", (event) => {
+    event.preventDefault();
+
+    renderLogin();
+    renderHamburgerMenu();
+    loadLoginEventListeners();
   });
 }
 
