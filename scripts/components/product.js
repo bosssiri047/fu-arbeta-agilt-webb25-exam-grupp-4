@@ -1,18 +1,18 @@
 export function createProduct(product) {
-	if (product.ingredients) {
-		//Ingredients string
-		let productIngredients = "";
+  if (product.ingredients) {
+    //Ingredients string
+    let productIngredients = "";
 
-		//Put ingredients from array into a string
-		product.ingredients.forEach((ingredient) => {
-			productIngredients += `${ingredient}, `;
-		});
+    //Put ingredients from array into a string
+    product.ingredients.forEach((ingredient) => {
+      productIngredients += `${ingredient}, `;
+    });
 
-		//Trimming out the extra ", "
-		productIngredients = productIngredients.slice(0, -2);
+    //Trimming out the extra ", "
+    productIngredients = productIngredients.slice(0, -2);
 
-		return `
-        <li class="menu__list-item"">
+    return `
+        <li class="menu__list-item">
             <button class="menu__card" id="${product.id}">
                 <div class="menu__card-info-group">
                     <h2 class="menu__card-name">
@@ -28,9 +28,9 @@ export function createProduct(product) {
             </button>
         </li>
         `;
-	} else {
-		return `
-        <li class="menu__list-item"">
+  } else {
+    return `
+        <li class="menu__list-item">
             <button class="menu__card" id="${product.id}">
                 <div class="menu__card-info-group">
                     <h2 class="menu__card-name">
@@ -43,5 +43,5 @@ export function createProduct(product) {
             </button>
         </li>
         `;
-	}
+  }
 }
