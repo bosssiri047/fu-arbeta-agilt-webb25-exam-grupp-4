@@ -1,0 +1,23 @@
+Närvarande
+Jonathan
+Boss
+Vincent
+
+Vad ska jag börja göra?
+Vad ska jag sluta göra?
+Vad ska jag forstätta göra?
+
+Jonathan
+* Prata med teamet för att bättre komma övernens om kod struktur.
+* Inte slarva lika mycket med testnings delen för att man känner att man är klar.
+* Komminucera dagligen med teamet utöver det dagliga mötet. Kommentera i koden för att göra det lättare.
+
+Boss
+* Prata med teamet för att bättre komma övernens om kod struktur.
+* 
+* Forsätta med bra kommunikation och hjälpa varandra. Leta buggar i andras kod.
+
+Vincent
+* Börja göra mer struktur, mer kommentarer i koden. Ändra saker omgåengde som behöver ändras och inte skjuta upp. Tidigare att be om hjälp, diskutera kod. Fråga teamet om kod struktur.
+* Inte hoppa runt i koden. Inte skippa att följa en bra struktur när man börjar koda.
+* Ska forsätta att försöka arbeta strukturerat. Komminucera. 

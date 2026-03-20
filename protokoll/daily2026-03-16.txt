@@ -1,0 +1,19 @@
+Närvarande
+Jonathan
+Boss
+Vincent
+
+Vad gjorde du igår?
+Vad ska du göra idag?
+Finns det några hinder?
+
+Jonathan:
+Börjar på inloggningssidan.
+
+
+Boss:
+Börjar på profilsidan.
+
+
+Vincent:
+Börjar på about us.

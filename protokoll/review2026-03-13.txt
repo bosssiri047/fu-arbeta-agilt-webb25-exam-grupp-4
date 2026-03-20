@@ -1,0 +1,11 @@
+Närvarande
+
+Jonathan
+Boss
+Vincent
+Jesper
+
+Sammanfatta vad ni presenterat, vilka kommentarer PO hade osv.
+Vi visade upp landingssidan, foodtrucksida, meny, kundvagn + bokningsbekräftelse. 
+Vi diskuterade vad vi skulle göra nästa sprint, inloggning, admin, individuell orderhistorik etc.
+Kunden var väldigt nöjd.

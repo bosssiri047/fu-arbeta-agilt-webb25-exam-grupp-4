@@ -1,0 +1,24 @@
+Närvarande
+Jonathan
+Boss
+Vincent
+
+Vad gjorde du igår?
+Vad ska du göra idag?
+Finns det några hinder?
+
+Jonathan:
+Gjorde klart kundvagn och hela eta/bokningsbekräftelse. Fixade med några merge patches.
+Göra foodtruck sidan interaktiv + annat.
+
+Boss:
+Gjorde lite uppdatering på menysidan så att man kan stänga av filtrering om man redan tryckt. Kopplade in våran kundvagn alert nummer. Fixade med merge patches. 
+Göra lite tweaks på CSS, fixa med hamburgarmenyn. 
+
+Vincent:
+Höll på med kvitto sidan.
+Ska göra klart kvitto sidan.
+Kan behöva merga den nyaste från dev för att göra klart 100%.
+
+Övrigt:
+Jonathan o Boss kommer ev hjälpa till för att få klart kvitto sidan idag.
