@@ -1,0 +1,20 @@
+Närvarande
+Jonathan
+Boss
+Vincent
+
+Vad gjorde du igår?
+Vad ska du göra idag?
+Finns det några hinder?
+
+Jonathan:
+Gjorde klart kundvagns popup.
+Göra klart tillgänglighetsanpassning. Kanske börjar med desktop.
+
+Boss:
+Fixade profilbild bug. La till check när man ändrar användaruppgifter.
+Hjälpa till och merga. Kanske börja på desktop.
+
+Vincent:
+Arbetade med dropdown.
+Göra klart kundvagnsdropdown o sedan försöka pusha upp o merga till dev.

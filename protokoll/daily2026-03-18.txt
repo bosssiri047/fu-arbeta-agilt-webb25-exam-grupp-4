@@ -1,0 +1,22 @@
+Närvarande
+Jonathan
+Boss
+Vincent
+
+Vad gjorde du igår?
+Vad ska du göra idag?
+Finns det några hinder?
+
+Jonathan:
+Gjorde klart registrering igår och påbörjade kundvagn login poup.
+Göra klart kundvagn popup, starta tillgänglihet.
+
+Boss:
+Profilsidan, ändra uppgifter, se orderhistorik + admin.
+Fixa profilbild bug. 
+Hjälp med profilbilden.
+
+
+Vincent:
+Prata med Jesper. Arbetar på med kundvagns dropdown.
+Fortsätter arbetet med kundvagns dropdown.

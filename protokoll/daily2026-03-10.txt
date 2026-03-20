@@ -1,0 +1,24 @@
+Närvarande
+Jonathan
+Boss
+Vincent
+
+Vad gjorde du igår?
+Vad ska du göra idag?
+Finns det några hinder?
+
+Jonathan:
+Statisk foodtruck sida klar. 
+Påbörjade lägga till i kundvagn story.
+Ska börja kundvagn idag.
+Koppla till meny som Boss håller på med.
+
+Boss:
+Satte med nav meny igår och lite på produkmeny.
+Forsätter med produktmeny och ev börjar med filtrera.
+Inga hinder.
+
+Vincent:
+Körde landingpage i går.
+Göra klart landingpage.
+Lite styling problem osv.

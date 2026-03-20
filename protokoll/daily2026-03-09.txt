@@ -1,0 +1,17 @@
+Närvarande
+Jonathan
+Boss
+Vincent
+
+Vad gjorde du igår?
+Vad ska du göra idag?
+Finns det några hinder?
+
+Jonathan:
+Skapa foodtrucksidan
+
+Boss:
+Skapa navigationsmeny
+
+Vincent:
+Skapa landningssidan

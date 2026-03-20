@@ -1,0 +1,23 @@
+Närvarande
+Jonathan
+Boss
+Vincent
+
+Vad ska jag börja göra?
+Vad ska jag sluta göra?
+Vad ska jag forstätta göra?
+
+Jonathan
+* Vara mer nogrann vid merge på GitHub så det inte skapar mer extra arbete.
+* Sluta strukturera css på olika sätt så att det blir bättre standard.
+* Forstätta skriva kommentarer i min kod så att mitt team lätt förstår.
+
+Boss
+* Arbeta bara i branches. Vara mer nogrann vid merge.
+* Inte arbeta i branches som vi ska göra.
+* Kodar på.
+
+Vincent
+* Strukurera upp mycket bättre. Fråga om hjälp snabbare.
+* Jag ska sluta att vara fast länge utan att fråga om hjälp. Sätta en tidsgräns på hur länge jag kan sitta fast. Fråga medarbetare vad viss kod gör.
+* Fråga om hjälp.

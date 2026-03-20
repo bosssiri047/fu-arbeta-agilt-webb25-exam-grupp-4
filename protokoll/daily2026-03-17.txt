@@ -1,0 +1,25 @@
+Närvarande
+Jonathan
+Boss
+Vincent
+
+Vad gjorde du igår?
+Vad ska du göra idag?
+Finns det några hinder?
+
+Jonathan:
+Gjorde klart login igår.
+Ska bygga regeistration idag.
+
+Boss:
+Började på profilsidan.
+Ska fortsätta på profilsidan men behöver lite kod från registrations branchen när den blir klar.
+
+Vincent:
+Gjorde klart about us, inte pushat den än.
+håller på med kundvagns dropdown.
+Vill ha lite hjälp med hur de andra tanker logiskt när dom tar sig an en upgift.
+
+
+Övrigt:
+Jonathan o Boss hjälper Vincent.

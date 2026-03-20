@@ -1,0 +1,21 @@
+Närvarande
+Jonathan
+Boss
+Vincent
+
+Vad gjorde du igår?
+Vad ska du göra idag?
+Finns det några hinder?
+
+Jonathan:
+Nästa helt klar med kundvagnen + order historik.
+Göra klart orderhistorik, sedan se till att hela flöded funkar. Kanske arbetar mer på foodtruck.
+
+Boss:
+Gjorde filter meny, gjorde lite finare på själva meny sidan.
+Är med att kollar om hela flöded funkar och eventuellt tar ny user story från prod backlog.
+
+Vincent:
+Gjorde klart landingssidan, påbörjar bokningsbekräftelse/kvitto.
+Arbetar på bokningsbekräftelse o kvitto.
+Ev frågar om hjälp med js.

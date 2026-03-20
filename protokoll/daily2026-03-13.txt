@@ -1,0 +1,20 @@
+Närvarande
+Jonathan
+Boss
+Vincent
+
+Vad gjorde du igår?
+Vad ska du göra idag?
+Finns det några hinder?
+
+Jonathan:
+Gjorde foodtruck sidan interaktiv. Kopplade kundvagns ikon siffran. Fixade på landingssidan att cta funkade.
+Sprint review o retrospective
+
+Boss:
+Lite små patchar, menysidan så det ser bättre ut och gjorde en kvittosida som backup ifall Vincent inte hinner bli klar.
+Sprint review o retrospective
+
+Vincent:
+Arbetad på kvitto sidan, fick hjälp av Jonathan för att börja få ut några resultat. 
+Sprint review o retrospective

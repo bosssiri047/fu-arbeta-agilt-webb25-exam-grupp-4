@@ -1,0 +1,6 @@
+Närvarande
+Jonathan
+Boss
+Vincent
+
+Vi har kommit fram till att det viktigaste är att en användare ska kunna logga in och få sin order sparad till en individuell order historik. Nästa är att en admin ska kunna logga in och se all orderhistorik. Sedan efter det kan vi ta extra grejer som att ändra användaruppgifter.
